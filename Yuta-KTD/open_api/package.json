@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "generate": "rm -rf dist && mkdir dist && cp .openapi-generator-ignore dist/ && npx openapi-generator-cli generate -i charger_spots.yml -g dart -t template/ -o dist/ && find dist/lib/model -type f | sed -E 's=.+/(.+).dart=\\1=g' | xargs -I {} sh -c \"sed -i '' s:FILE_NAME:{}:g dist/lib/model/{}.dart && echo export \\'./model/{}.dart\\'\\; >> dist/lib/models.dart\""
+    },
+    "devDependencies": {
+        "@openapitools/openapi-generator-cli": "^2.4.12"
+    }
+}

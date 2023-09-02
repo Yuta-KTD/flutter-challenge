@@ -42,6 +42,7 @@ dependencies:
 
   openapi:
     path: ./open_api/dist/
+  flutter_riverpod: ^2.3.10
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'charger_spots_request.freezed.dart';
 part 'charger_spots_request.g.dart';
 
+/// リクエスト用のモデル
 @freezed
 class ChargerSpotsRequest with _$ChargerSpotsRequest {
   // 今回の課題で使いそうなパラメーターだけにする

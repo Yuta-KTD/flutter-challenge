@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **chargerSpots**
-> Response chargerSpots(userUuid, swLat, swLng, neLat, neLng, uuid, text, fields, deviceTypes, feeTypes, nowAvailable, styles, gogoevAuthenticationNetworks, categories, open24Hours, advanceContacts, parkingFeeTypes)
+> Response chargerSpots(X_EVENE_NATIVE_API_TOKEN, userUuid, swLat, swLng, neLat, neLng, uuid, text, fields, deviceTypes, feeTypes, nowAvailable, styles, gogoevAuthenticationNetworks, categories, open24Hours, advanceContacts, parkingFeeTypes)
 
 充電スポットと充電スポットに紐づく充電器を返します。緯度経度（４つ）、uuidまたはtextのいずれかが必須。
 
@@ -22,6 +22,7 @@ Method | HTTP request | Description
 import 'package:openapi/api.dart';
 
 final api_instance = ChargerSpotsApi();
+final X_EVENE_NATIVE_API_TOKEN = X_EVENE_NATIVE_API_TOKEN_example; // String | 認証トークン
 final userUuid = a3ee472d-a143-49af-9161-4e588eaefba0; // String | ユーザのuuid
 final swLat = 35.683331703634124; // String | 検索したいエリアの最南西（左下）の緯度
 final swLng = 139.7657155055581; // String | 検索したいエリアの最南西（左下）の経度
@@ -41,7 +42,7 @@ final advanceContacts = necessary; // String | 事前連絡（necessary: 必要,
 final parkingFeeTypes = pay; // String | 駐車料金（pay: 有料, conditional_free: 条件付き無料, free: 無料, unknown: 不明）カンマ区切りで連結
 
 try {
-    final result = api_instance.chargerSpots(userUuid, swLat, swLng, neLat, neLng, uuid, text, fields, deviceTypes, feeTypes, nowAvailable, styles, gogoevAuthenticationNetworks, categories, open24Hours, advanceContacts, parkingFeeTypes);
+    final result = api_instance.chargerSpots(X_EVENE_NATIVE_API_TOKEN, userUuid, swLat, swLng, neLat, neLng, uuid, text, fields, deviceTypes, feeTypes, nowAvailable, styles, gogoevAuthenticationNetworks, categories, open24Hours, advanceContacts, parkingFeeTypes);
     print(result);
 } catch (e) {
     print('Exception when calling ChargerSpotsApi->chargerSpots: $e\n');
@@ -52,6 +53,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **X_EVENE_NATIVE_API_TOKEN** | **String**| 認証トークン | 
  **userUuid** | **String**| ユーザのuuid | [optional] 
  **swLat** | **String**| 検索したいエリアの最南西（左下）の緯度 | [optional] 
  **swLng** | **String**| 検索したいエリアの最南西（左下）の経度 | [optional] 

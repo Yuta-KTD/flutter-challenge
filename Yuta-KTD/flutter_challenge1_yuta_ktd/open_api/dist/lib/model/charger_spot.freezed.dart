@@ -48,7 +48,7 @@ mixin _$ChargerSpot {
   String? get parkingFee => throw _privateConstructorUsedError;
   String? get advanceContact => throw _privateConstructorUsedError;
   List<String> get gogoevNotes => throw _privateConstructorUsedError;
-  List<String> get maintenanceNote => throw _privateConstructorUsedError;
+  List<String?> get maintenanceNote => throw _privateConstructorUsedError;
   MaintenanceStatus? get maintenanceStatus =>
       throw _privateConstructorUsedError;
 
@@ -89,7 +89,7 @@ abstract class $ChargerSpotCopyWith<$Res> {
       String? parkingFee,
       String? advanceContact,
       List<String> gogoevNotes,
-      List<String> maintenanceNote,
+      List<String?> maintenanceNote,
       MaintenanceStatus? maintenanceStatus});
 }
 
@@ -225,7 +225,7 @@ class _$ChargerSpotCopyWithImpl<$Res, $Val extends ChargerSpot>
       maintenanceNote: null == maintenanceNote
           ? _value.maintenanceNote
           : maintenanceNote // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String?>,
       maintenanceStatus: freezed == maintenanceStatus
           ? _value.maintenanceStatus
           : maintenanceStatus // ignore: cast_nullable_to_non_nullable
@@ -267,7 +267,7 @@ abstract class _$$_ChargerSpotCopyWith<$Res>
       String? parkingFee,
       String? advanceContact,
       List<String> gogoevNotes,
-      List<String> maintenanceNote,
+      List<String?> maintenanceNote,
       MaintenanceStatus? maintenanceStatus});
 }
 
@@ -401,7 +401,7 @@ class __$$_ChargerSpotCopyWithImpl<$Res>
       maintenanceNote: null == maintenanceNote
           ? _value._maintenanceNote
           : maintenanceNote // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String?>,
       maintenanceStatus: freezed == maintenanceStatus
           ? _value.maintenanceStatus
           : maintenanceStatus // ignore: cast_nullable_to_non_nullable
@@ -439,7 +439,7 @@ class _$_ChargerSpot implements _ChargerSpot {
       this.parkingFee,
       this.advanceContact,
       final List<String> gogoevNotes = const [],
-      final List<String> maintenanceNote = const [],
+      final List<String?> maintenanceNote = const [],
       this.maintenanceStatus})
       : _directions = directions,
         _images = images,
@@ -566,10 +566,10 @@ class _$_ChargerSpot implements _ChargerSpot {
     return EqualUnmodifiableListView(_gogoevNotes);
   }
 
-  final List<String> _maintenanceNote;
+  final List<String?> _maintenanceNote;
   @override
   @JsonKey()
-  List<String> get maintenanceNote {
+  List<String?> get maintenanceNote {
     if (_maintenanceNote is EqualUnmodifiableListView) return _maintenanceNote;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_maintenanceNote);
@@ -706,7 +706,7 @@ abstract class _ChargerSpot implements ChargerSpot {
       final String? parkingFee,
       final String? advanceContact,
       final List<String> gogoevNotes,
-      final List<String> maintenanceNote,
+      final List<String?> maintenanceNote,
       final MaintenanceStatus? maintenanceStatus}) = _$_ChargerSpot;
 
   factory _ChargerSpot.fromJson(Map<String, dynamic> json) =
@@ -759,7 +759,7 @@ abstract class _ChargerSpot implements ChargerSpot {
   @override
   List<String> get gogoevNotes;
   @override
-  List<String> get maintenanceNote;
+  List<String?> get maintenanceNote;
   @override
   MaintenanceStatus? get maintenanceStatus;
   @override

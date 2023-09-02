@@ -45,7 +45,7 @@ class ChargerSpot with _$ChargerSpot {
     String? parkingFee,
     String? advanceContact,
     @Default(const []) List<String> gogoevNotes,
-    @Default(const []) List<String> maintenanceNote,
+    @Default(const []) List<String?> maintenanceNote,
     MaintenanceStatus? maintenanceStatus,
   }) = _ChargerSpot;
 

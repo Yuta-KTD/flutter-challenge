@@ -68,7 +68,7 @@ _$_ChargerSpot _$$_ChargerSpotFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const [],
       maintenanceNote: (json['maintenance_note'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) => e as String?)
               .toList() ??
           const [],
       maintenanceStatus: $enumDecodeNullable(

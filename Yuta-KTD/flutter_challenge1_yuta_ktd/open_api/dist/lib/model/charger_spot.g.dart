@@ -12,7 +12,7 @@ _$_ChargerSpot _$$_ChargerSpotFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       latitude: json['latitude'] as num,
       longitude: json['longitude'] as num,
-      source_: $enumDecode(_$ModelSourceEnumMap, json['source_']),
+      source: $enumDecode(_$ModelSourceEnumMap, json['source']),
       note: json['note'] as String?,
       directions: (json['directions'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -81,7 +81,7 @@ Map<String, dynamic> _$$_ChargerSpotToJson(_$_ChargerSpot instance) =>
       'name': instance.name,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'source_': _$ModelSourceEnumMap[instance.source_]!,
+      'source': _$ModelSourceEnumMap[instance.source]!,
       'note': instance.note,
       'directions': instance.directions,
       'marker_label': _$MarkerLabelEnumMap[instance.markerLabel],

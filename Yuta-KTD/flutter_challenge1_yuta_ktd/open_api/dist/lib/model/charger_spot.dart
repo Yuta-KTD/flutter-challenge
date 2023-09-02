@@ -23,15 +23,19 @@ class ChargerSpot with _$ChargerSpot {
     required String name,
     required num latitude,
     required num longitude,
-    required ModelSource source_,
+    required ModelSource source,
     String? note,
     @Default(const []) List<String> directions,
     MarkerLabel? markerLabel,
     @Default(const []) List<ChargerSpotImage> images,
     String? serviceTimeNote,
     NowAvailable? nowAvailable,
-    @Default(const []) List<GroupedTotalUnitPricesThisMonthNextMonth> groupedTotalUnitPricesThisMonthNextMonth,
-    @Default(const []) List<GroupedTotalUnitPricesThisMonthNextMonthByUser> groupedTotalUnitPricesThisMonthNextMonthByUser,
+    @Default(const [])
+    List<GroupedTotalUnitPricesThisMonthNextMonth>
+        groupedTotalUnitPricesThisMonthNextMonth,
+    @Default(const [])
+    List<GroupedTotalUnitPricesThisMonthNextMonthByUser>
+        groupedTotalUnitPricesThisMonthNextMonthByUser,
     @Default(const []) List<ChargerSpotServiceTime> chargerSpotServiceTimes,
     @Default(const []) List<ChargerDevice> chargerDevices,
     @Default(const []) List<GogoevChargerDevice> gogoevChargerDevices,
@@ -44,7 +48,7 @@ class ChargerSpot with _$ChargerSpot {
     @Default(const []) List<String> maintenanceNote,
     MaintenanceStatus? maintenanceStatus,
   }) = _ChargerSpot;
-  
-  factory ChargerSpot.fromJson(Map<String, dynamic> json) => _$ChargerSpotFromJson(json);
-}
 
+  factory ChargerSpot.fromJson(Map<String, dynamic> json) =>
+      _$ChargerSpotFromJson(json);
+}

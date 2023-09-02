@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: non_constant_identifier_names
+
 part of 'charger_spots_request.dart';
 
 // **************************************************************************
@@ -9,7 +11,6 @@ part of 'charger_spots_request.dart';
 _$_ChargerSpotsRequest _$$_ChargerSpotsRequestFromJson(
         Map<String, dynamic> json) =>
     _$_ChargerSpotsRequest(
-      xEveneNativeApiToken: json['X-EVENE-NATIVE-API-TOKEN'] as String,
       swLat: json['sw_lat'] as String?,
       swLng: json['sw_lng'] as String?,
       neLat: json['ne_lat'] as String?,
@@ -21,7 +22,6 @@ _$_ChargerSpotsRequest _$$_ChargerSpotsRequestFromJson(
 Map<String, dynamic> _$$_ChargerSpotsRequestToJson(
         _$_ChargerSpotsRequest instance) =>
     <String, dynamic>{
-      'X-EVENE-NATIVE-API-TOKEN': instance.xEveneNativeApiToken,
       'sw_lat': instance.swLat,
       'sw_lng': instance.swLng,
       'ne_lat': instance.neLat,

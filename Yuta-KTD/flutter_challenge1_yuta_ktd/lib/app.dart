@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/view_model/charger_spots_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,42 +17,44 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MapSample(),
-      home: const MyHomePage(title: 'GoogleMap呼び出すまでのテスト用'),
+      home: const MyHomePage(),
     );
   }
 }
 
 // TODO: GoogleMapを呼び出したいフェーズに移ったら削除
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  final String title;
+class MyHomePage extends ConsumerStatefulWidget {
+  const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final chargerSpotsAsyncProvider = ref.watch(chargerSpotsFutureProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('test'),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'test',
-            ),
-          ],
-        ),
+      body: chargerSpotsAsyncProvider.when(
+        data: (res) => ListView.builder(
+            itemCount: res.chargerSpots.length,
+            itemBuilder: (_, index) {
+              final name = res.chargerSpots[index].name;
+              return Text(name);
+            }),
+        error: (error, _) => const Center(child: Text('通信エラー')),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }
 }
+
+
 
 // FIXME: これはサンプル
 // class MapSample extends StatefulWidget {

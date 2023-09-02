@@ -20,8 +20,6 @@ ChargerSpotsRequest _$ChargerSpotsRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChargerSpotsRequest {
-  @JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN')
-  String get xEveneNativeApiToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'sw_lat')
   String? get swLat => throw _privateConstructorUsedError;
   @JsonKey(name: 'sw_lng')
@@ -46,8 +44,7 @@ abstract class $ChargerSpotsRequestCopyWith<$Res> {
       _$ChargerSpotsRequestCopyWithImpl<$Res, ChargerSpotsRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN') String xEveneNativeApiToken,
-      @JsonKey(name: 'sw_lat') String? swLat,
+      {@JsonKey(name: 'sw_lat') String? swLat,
       @JsonKey(name: 'sw_lng') String? swLng,
       @JsonKey(name: 'ne_lat') String? neLat,
       @JsonKey(name: 'ne_lng') String? neLng,
@@ -68,7 +65,6 @@ class _$ChargerSpotsRequestCopyWithImpl<$Res, $Val extends ChargerSpotsRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? xEveneNativeApiToken = null,
     Object? swLat = freezed,
     Object? swLng = freezed,
     Object? neLat = freezed,
@@ -77,10 +73,6 @@ class _$ChargerSpotsRequestCopyWithImpl<$Res, $Val extends ChargerSpotsRequest>
     Object? fields = freezed,
   }) {
     return _then(_value.copyWith(
-      xEveneNativeApiToken: null == xEveneNativeApiToken
-          ? _value.xEveneNativeApiToken
-          : xEveneNativeApiToken // ignore: cast_nullable_to_non_nullable
-              as String,
       swLat: freezed == swLat
           ? _value.swLat
           : swLat // ignore: cast_nullable_to_non_nullable
@@ -118,8 +110,7 @@ abstract class _$$_ChargerSpotsRequestCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN') String xEveneNativeApiToken,
-      @JsonKey(name: 'sw_lat') String? swLat,
+      {@JsonKey(name: 'sw_lat') String? swLat,
       @JsonKey(name: 'sw_lng') String? swLng,
       @JsonKey(name: 'ne_lat') String? neLat,
       @JsonKey(name: 'ne_lng') String? neLng,
@@ -138,7 +129,6 @@ class __$$_ChargerSpotsRequestCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? xEveneNativeApiToken = null,
     Object? swLat = freezed,
     Object? swLng = freezed,
     Object? neLat = freezed,
@@ -147,10 +137,6 @@ class __$$_ChargerSpotsRequestCopyWithImpl<$Res>
     Object? fields = freezed,
   }) {
     return _then(_$_ChargerSpotsRequest(
-      xEveneNativeApiToken: null == xEveneNativeApiToken
-          ? _value.xEveneNativeApiToken
-          : xEveneNativeApiToken // ignore: cast_nullable_to_non_nullable
-              as String,
       swLat: freezed == swLat
           ? _value.swLat
           : swLat // ignore: cast_nullable_to_non_nullable
@@ -183,9 +169,7 @@ class __$$_ChargerSpotsRequestCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ChargerSpotsRequest implements _ChargerSpotsRequest {
   const _$_ChargerSpotsRequest(
-      {@JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN')
-      required this.xEveneNativeApiToken,
-      @JsonKey(name: 'sw_lat') this.swLat,
+      {@JsonKey(name: 'sw_lat') this.swLat,
       @JsonKey(name: 'sw_lng') this.swLng,
       @JsonKey(name: 'ne_lat') this.neLat,
       @JsonKey(name: 'ne_lng') this.neLng,
@@ -195,9 +179,6 @@ class _$_ChargerSpotsRequest implements _ChargerSpotsRequest {
   factory _$_ChargerSpotsRequest.fromJson(Map<String, dynamic> json) =>
       _$$_ChargerSpotsRequestFromJson(json);
 
-  @override
-  @JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN')
-  final String xEveneNativeApiToken;
   @override
   @JsonKey(name: 'sw_lat')
   final String? swLat;
@@ -217,7 +198,7 @@ class _$_ChargerSpotsRequest implements _ChargerSpotsRequest {
 
   @override
   String toString() {
-    return 'ChargerSpotsRequest(xEveneNativeApiToken: $xEveneNativeApiToken, swLat: $swLat, swLng: $swLng, neLat: $neLat, neLng: $neLng, uuid: $uuid, fields: $fields)';
+    return 'ChargerSpotsRequest(swLat: $swLat, swLng: $swLng, neLat: $neLat, neLng: $neLng, uuid: $uuid, fields: $fields)';
   }
 
   @override
@@ -225,8 +206,6 @@ class _$_ChargerSpotsRequest implements _ChargerSpotsRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChargerSpotsRequest &&
-            (identical(other.xEveneNativeApiToken, xEveneNativeApiToken) ||
-                other.xEveneNativeApiToken == xEveneNativeApiToken) &&
             (identical(other.swLat, swLat) || other.swLat == swLat) &&
             (identical(other.swLng, swLng) || other.swLng == swLng) &&
             (identical(other.neLat, neLat) || other.neLat == neLat) &&
@@ -237,8 +216,8 @@ class _$_ChargerSpotsRequest implements _ChargerSpotsRequest {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, xEveneNativeApiToken, swLat,
-      swLng, neLat, neLng, uuid, fields);
+  int get hashCode =>
+      Object.hash(runtimeType, swLat, swLng, neLat, neLng, uuid, fields);
 
   @JsonKey(ignore: true)
   @override
@@ -257,9 +236,7 @@ class _$_ChargerSpotsRequest implements _ChargerSpotsRequest {
 
 abstract class _ChargerSpotsRequest implements ChargerSpotsRequest {
   const factory _ChargerSpotsRequest(
-      {@JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN')
-      required final String xEveneNativeApiToken,
-      @JsonKey(name: 'sw_lat') final String? swLat,
+      {@JsonKey(name: 'sw_lat') final String? swLat,
       @JsonKey(name: 'sw_lng') final String? swLng,
       @JsonKey(name: 'ne_lat') final String? neLat,
       @JsonKey(name: 'ne_lng') final String? neLng,
@@ -269,9 +246,6 @@ abstract class _ChargerSpotsRequest implements ChargerSpotsRequest {
   factory _ChargerSpotsRequest.fromJson(Map<String, dynamic> json) =
       _$_ChargerSpotsRequest.fromJson;
 
-  @override
-  @JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN')
-  String get xEveneNativeApiToken;
   @override
   @JsonKey(name: 'sw_lat')
   String? get swLat;

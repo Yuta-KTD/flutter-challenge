@@ -8,9 +8,7 @@ part 'charger_spots_request.g.dart';
 class ChargerSpotsRequest with _$ChargerSpotsRequest {
   // 今回の課題で使いそうなパラメーターだけにする
   const factory ChargerSpotsRequest(
-      {@JsonKey(name: 'X-EVENE-NATIVE-API-TOKEN')
-      required String xEveneNativeApiToken,
-      @JsonKey(name: 'sw_lat') String? swLat,
+      {@JsonKey(name: 'sw_lat') String? swLat,
       @JsonKey(name: 'sw_lng') String? swLng,
       @JsonKey(name: 'ne_lat') String? neLat,
       @JsonKey(name: 'ne_lng') String? neLng,

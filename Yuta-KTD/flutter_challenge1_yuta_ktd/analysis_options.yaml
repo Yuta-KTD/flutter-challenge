@@ -23,7 +23,11 @@ linter:
   # producing the lint.
   rules:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    prefer_single_quotes: true 
-
+    prefer_single_quotes: true
+# freezed + json_serializableを使って@JsonKeyからパラメータをtoJsonできるようにしようとしたら警告出たので追記
+# 参考: https://pub.dev/packages/freezed#disabling-invalid_annotation_target-warning-and-warning-in-generates-files
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

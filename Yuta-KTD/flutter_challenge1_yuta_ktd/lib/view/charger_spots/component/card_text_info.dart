@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
 import 'package:openapi/models.dart';
 
 import '../../../constant/decolation_style.dart';
 import 'card_text.dart';
+import 'card_text_infos/available_charger.dart';
 import 'card_text_infos/business_hours.dart';
+import 'card_text_infos/charger_power.dart';
 import 'card_text_infos/regular_holiday.dart';
 
 class CardTextInfo extends StatelessWidget {
@@ -35,9 +36,9 @@ class CardTextInfo extends StatelessWidget {
         children: [
           _cardTitle(name),
           const SizedBox(height: 8.0),
-          _avalilableCharger(chargerDevices),
+          AvailableCharger(chargerDevices),
           heightBox12,
-          _chagerPower(chargerDevices),
+          ChargerPower(chargerDevices),
           heightBox12,
           BusinessHours(chargerSpotServiceTimes),
           heightBox12,
@@ -62,65 +63,6 @@ class CardTextInfo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           color: textColor,
         ),
-      ),
-    );
-  }
-
-  Widget _avalilableCharger(List<ChargerDevice> chargerDevices) {
-    final int allDevices = chargerDevices.length;
-    // DisplayStatus.availableの要素のみの配列の長さを使って、使用可能なデバイス数を計算
-    final int availableDevices = chargerDevices
-        .where((element) => element.displayStatus == DisplayStatus.available)
-        .length;
-    return Row(
-      children: [
-        Assets.power.image(width: 16.0, height: 16.0),
-        Container(
-          width: 78.0,
-          padding: const EdgeInsets.only(right: 10.0),
-          child: const CardText('利用可能'),
-        ),
-        // TODO: 残り代数によってテキストの色かえる（RichText使うことになるかな？）
-        CardText('$availableDevices/$allDevices'),
-      ],
-    );
-  }
-
-  Widget _chagerPower(List<ChargerDevice> chargerDevices) {
-    // 重複はしたくないので、Set型で作って、そのあとListに戻す
-    Set<String> uniqueList = {};
-    for (var element in chargerDevices) {
-      uniqueList.add(element.power);
-    }
-
-    // SetをListに変換
-    List<String> resultList = uniqueList.toList();
-
-    // 今後増える可能性もあるのでListView.builderで作成する
-    return SizedBox(
-      height: 19.0,
-      child: Row(
-        children: [
-          Assets.bolt.image(width: 16.0, height: 16.0),
-          Container(
-            width: 78.0,
-            padding: const EdgeInsets.only(right: 10.0),
-            child: const CardText('充電出力'),
-          ),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: resultList.length,
-              itemBuilder: (_, index) {
-                bool isLast = index == resultList.length - 1;
-                final boltText = isLast
-                    ? '${resultList[index]}kW'
-                    : '${resultList[index]}kW、';
-                return CardText(boltText);
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

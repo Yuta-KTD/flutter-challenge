@@ -4,6 +4,7 @@ import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card_te
 import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card_text_infos/card_text_info_title.dart';
 import 'package:openapi/models.dart';
 
+/// 定休日一覧
 class RegularHoliday extends StatelessWidget {
   final List<ChargerSpotServiceTime> chargerSpotServiceTimes;
   const RegularHoliday(this.chargerSpotServiceTimes, {super.key});

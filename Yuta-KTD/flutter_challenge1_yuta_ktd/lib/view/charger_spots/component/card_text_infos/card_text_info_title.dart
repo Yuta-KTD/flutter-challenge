@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card_text.dart';
 
+/// 各情報のタイトルとそのアイコン
 class CardTextInfoTitle extends StatelessWidget {
   final String title;
   final Image image;

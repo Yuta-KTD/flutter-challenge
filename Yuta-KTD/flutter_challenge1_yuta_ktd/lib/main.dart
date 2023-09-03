@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/app.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'app.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig

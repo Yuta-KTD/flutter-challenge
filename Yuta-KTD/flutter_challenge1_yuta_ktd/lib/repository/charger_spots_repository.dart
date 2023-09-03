@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../datastore/charger_spots_datastore_interface.dart';
@@ -17,7 +15,6 @@ class ChargerSpotsRepository implements ChargerSpotsRepositoryInterface {
       ChargerSpotsRequest param) async {
     try {
       final data = await dataStore.fetchChargerSpots(param);
-      inspect(data);
       return data;
     } on Exception catch (e) {
       debugPrint(e.toString());

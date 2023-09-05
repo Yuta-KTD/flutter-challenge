@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
-import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card_text.dart';
-import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card_text_infos/card_text_info_title.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card/card_text.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card/card_text_infos/card_text_info_title.dart';
 import 'package:openapi/models.dart';
 
 /// 定休日一覧

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
-import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/charger_spots_info_card.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card/charger_spots_info_card.dart';
 import 'package:flutter_challenge1_yuta_ktd/view_model/charger_spots_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';

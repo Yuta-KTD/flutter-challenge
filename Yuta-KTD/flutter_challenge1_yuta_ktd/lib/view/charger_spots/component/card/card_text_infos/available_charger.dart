@@ -3,7 +3,7 @@ import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
 import 'package:openapi/model/charger_device.dart';
 import 'package:openapi/model/display_status.dart';
 
-import '../../../../constant/decolation_style.dart';
+import '../../../../../constant/decolation_style.dart';
 import '../card_text.dart';
 
 /// 使用可能な充電スポットと充電スポットの総数を表示

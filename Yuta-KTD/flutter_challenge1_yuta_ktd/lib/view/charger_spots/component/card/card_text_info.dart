@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/models.dart';
 
-import '../../../constant/decolation_style.dart';
+import '../../../../constant/decolation_style.dart';
 import 'card_text.dart';
 import 'card_text_infos/available_charger.dart';
 import 'card_text_infos/business_hours.dart';

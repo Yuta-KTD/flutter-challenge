@@ -117,7 +117,6 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    print('走ってる？？');
     _controller.complete(controller);
   }
 

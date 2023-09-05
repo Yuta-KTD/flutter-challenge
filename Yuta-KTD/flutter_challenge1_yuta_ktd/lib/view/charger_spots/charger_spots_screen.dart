@@ -12,58 +12,15 @@ import '../../core/location/location_provider.dart';
 
 // TODO: GoogleMapを呼び出したいフェーズに移ったら削除
 
-class MyHomePage extends ConsumerStatefulWidget {
-  const MyHomePage({super.key});
+class ChargerSpotScreen extends ConsumerStatefulWidget {
+  const ChargerSpotScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MyHomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      ChargerSpotScreenState();
 }
 
-class _MyHomePageState extends ConsumerState<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    final chargerSpotsAsyncProvider = ref.watch(chargerSpotsFutureProvider);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('test'),
-      ),
-      body: Stack(
-        children: [
-          // TODO: GoogleMapを配置する
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SizedBox(
-              height: 272.0,
-              child: chargerSpotsAsyncProvider.when(
-                data: (res) => ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: res.chargerSpots.length,
-                    itemBuilder: (_, index) {
-                      final data = res.chargerSpots[index];
-                      return ChargerSpotsInfoCard(chargerSpot: data);
-                    }),
-                error: (error, _) => const Center(child: Text('通信エラー')),
-                loading: () => const Center(child: CircularProgressIndicator()),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MapSample extends ConsumerStatefulWidget {
-  const MapSample({Key? key}) : super(key: key);
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => MapSampleState();
-}
-
-class MapSampleState extends ConsumerState<MapSample> {
+class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   final Duration showCardDuration = const Duration(milliseconds: 400);
   Position? position;
@@ -136,9 +93,14 @@ class MapSampleState extends ConsumerState<MapSample> {
                         final data = res.chargerSpots[index];
                         return ChargerSpotsInfoCard(chargerSpot: data);
                       }),
-                  error: (error, _) => const Center(child: Text('通信エラー')),
+                  error: (error, _) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(error.toString())),
+                    );
+                    return _errorLoading(const Text('通信エラーです'));
+                  },
                   loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                      _errorLoading(const CircularProgressIndicator()),
                 ),
               ),
             ),
@@ -169,5 +131,12 @@ class MapSampleState extends ConsumerState<MapSample> {
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     _controller.complete(controller);
+  }
+
+  Widget _errorLoading(Widget child) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: child,
+    );
   }
 }

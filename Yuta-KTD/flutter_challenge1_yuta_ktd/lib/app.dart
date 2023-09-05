@@ -9,8 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: MapSample(),
-      // home: const MyHomePage(),
+      home: ChargerSpotScreen(),
     );
   }
 }

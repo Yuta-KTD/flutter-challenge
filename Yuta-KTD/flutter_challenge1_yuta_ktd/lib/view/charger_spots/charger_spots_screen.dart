@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
-import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card/charger_spots_info_card.dart';
-import 'package:flutter_challenge1_yuta_ktd/view_model/charger_spots_view_model.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../constant/decolation_style.dart';
 import '../../core/location/location_provider.dart';
+import '../../view_model/charger_spots_view_model.dart';
+import 'component/card/charger_spots_info_card.dart';
+import 'component/map/charger_map.dart';
 
 // TODO: GoogleMapを呼び出したいフェーズに移ったら削除
 
@@ -37,25 +39,10 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            onTap: (_) {
-              if (!showCard) return;
-              setState(() {
-                showCard = false;
-              });
-            },
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(
-                //positionが取得できない場合は初期座標を東京付近に設定する
-                position?.latitude ?? 36,
-                position?.longitude ?? 140,
-              ),
-              zoom: 16,
-            ),
+          ChargerMap(
+            onTap: _onMapTap,
+            position: position,
             onMapCreated: _onMapCreated,
-            myLocationButtonEnabled: false,
           ),
           AnimatedPositioned(
             duration: showCardDuration,
@@ -123,14 +110,22 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(latitude, longitude),
-          zoom: 13,
+          zoom: 17, // zoomは匙加減
         ),
       ),
     );
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
+    print('走ってる？？');
     _controller.complete(controller);
+  }
+
+  void _onMapTap() {
+    if (!showCard) return;
+    setState(() {
+      showCard = false;
+    });
   }
 
   Widget _errorLoading(Widget child) {

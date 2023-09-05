@@ -43,6 +43,7 @@ dependencies:
   openapi:
     path: ./open_api/dist/
   flutter_riverpod: ^2.3.10
+  geolocator: ^10.0.0
 
 dev_dependencies:
   flutter_test:

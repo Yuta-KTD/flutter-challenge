@@ -18,6 +18,7 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(cardCircular),
       ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       child: SizedBox(
         width: 364.0,
         child: Column(
@@ -25,13 +26,7 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
           children: [
             SizedBox(
               height: 72.0,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(cardCircular),
-                  topRight: Radius.circular(cardCircular),
-                ),
-                child: _images(chargerSpot.images),
-              ),
+              child: _images(chargerSpot.images),
             ),
             CardTextInfo(
               name: chargerSpot.name,

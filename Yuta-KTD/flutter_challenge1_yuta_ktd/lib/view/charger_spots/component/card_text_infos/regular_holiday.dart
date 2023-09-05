@@ -47,7 +47,7 @@ class RegularHoliday extends StatelessWidget {
   }
 }
 
-// sunday(displayName: '日曜日')みたいにしようと思ったけど既存で自動生成のものがあるので拡張する
+// sunday(displayName: '日曜日')みたいにしようと思ったが、既存で自動生成のものがあるので拡張する
 extension DayDisplayNameExtension on Day {
   String get displayName => switch (this) {
         Day.sunday => '日曜日',

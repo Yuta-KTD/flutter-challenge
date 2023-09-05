@@ -56,7 +56,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 }
 
-// FIXME: これはサンプル
 class MapSample extends ConsumerStatefulWidget {
   const MapSample({Key? key}) : super(key: key);
 
@@ -66,12 +65,15 @@ class MapSample extends ConsumerStatefulWidget {
 
 class MapSampleState extends ConsumerState<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
+  final Duration showCardDuration = const Duration(milliseconds: 400);
   Position? position;
+  // カードをせり出すかどうか
+  bool showCard = false;
 
   @override
   Widget build(BuildContext context) {
     final chargerSpotsAsyncProvider = ref.watch(chargerSpotsFutureProvider);
-    // Widgetが初めてビルドされた後にこのメソッドを呼び出す
+    // Widgetが初めてビルドされた後に呼び出す
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _moveCamera();
     });
@@ -79,11 +81,17 @@ class MapSampleState extends ConsumerState<MapSample> {
       body: Stack(
         children: [
           GoogleMap(
+            onTap: (_) {
+              if (!showCard) return;
+              setState(() {
+                showCard = false;
+              });
+            },
             mapType: MapType.normal,
             myLocationEnabled: true,
             initialCameraPosition: CameraPosition(
               target: LatLng(
-                //positionがnullなら初期座標を東京付近に設定する
+                //positionが取得できない場合は初期座標を東京付近に設定する
                 position?.latitude ?? 36,
                 position?.longitude ?? 140,
               ),
@@ -92,31 +100,46 @@ class MapSampleState extends ConsumerState<MapSample> {
             onMapCreated: _onMapCreated,
             myLocationButtonEnabled: false,
           ),
-          Positioned(
-            bottom: 400,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () => _moveCamera(),
-              backgroundColor: textColor,
-              child: const Icon(Icons.gps_fixed),
+          AnimatedPositioned(
+            duration: showCardDuration,
+            bottom: showCard ? 320.0 : 150.0,
+            right: 16.0,
+            child: SizedBox(
+              width: 62.0,
+              height: 62.0,
+              child: FloatingActionButton(
+                onPressed: () => _moveCamera(),
+                backgroundColor: textColor,
+                child: const Icon(Icons.gps_fixed),
+              ),
             ),
           ),
-          Positioned(
+          AnimatedPositioned(
+            duration: showCardDuration,
             left: 0,
             right: 0,
-            bottom: 0,
+            bottom: showCard ? 40 : -130.0,
             child: SizedBox(
               height: 272.0,
-              child: chargerSpotsAsyncProvider.when(
-                data: (res) => ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: res.chargerSpots.length,
-                    itemBuilder: (_, index) {
-                      final data = res.chargerSpots[index];
-                      return ChargerSpotsInfoCard(chargerSpot: data);
-                    }),
-                error: (error, _) => const Center(child: Text('通信エラー')),
-                loading: () => const Center(child: CircularProgressIndicator()),
+              child: GestureDetector(
+                onTap: () {
+                  if (showCard) return;
+                  setState(() {
+                    showCard = true;
+                  });
+                },
+                child: chargerSpotsAsyncProvider.when(
+                  data: (res) => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: res.chargerSpots.length,
+                      itemBuilder: (_, index) {
+                        final data = res.chargerSpots[index];
+                        return ChargerSpotsInfoCard(chargerSpot: data);
+                      }),
+                  error: (error, _) => const Center(child: Text('通信エラー')),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                ),
               ),
             ),
           ),
@@ -125,7 +148,7 @@ class MapSampleState extends ConsumerState<MapSample> {
     );
   }
 
-  // 位置データを取得し、カメラを移動させるメソッド
+  // 位置データを取得し、カメラを移動させる
   Future<void> _moveCamera() async {
     position = await ref.refresh(locationProvider.future);
     final mapController = await _controller.future;
@@ -147,9 +170,4 @@ class MapSampleState extends ConsumerState<MapSample> {
   Future<void> _onMapCreated(GoogleMapController controller) async {
     _controller.complete(controller);
   }
-
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
 }

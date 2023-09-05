@@ -6,7 +6,7 @@ final locationProvider = FutureProvider((ref) async {
   LocationPermission permission;
 
   // 位置情報サービスが有効かどうか
-  // TODO: permission_handlerで端末の位置情報権限の有効化を確認する
+  // TODO: permission_handlerで端末の位置情報権限の有効化を促す
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
     return null;

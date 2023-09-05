@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
 import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/charger_spots_info_card.dart';
 import 'package:flutter_challenge1_yuta_ktd/view_model/charger_spots_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,7 +73,7 @@ class MapSampleState extends ConsumerState<MapSample> {
     final chargerSpotsAsyncProvider = ref.watch(chargerSpotsFutureProvider);
     // Widgetが初めてビルドされた後にこのメソッドを呼び出す
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _moveCamera(ref);
+      await _moveCamera();
     });
     return Scaffold(
       body: Stack(
@@ -95,8 +96,9 @@ class MapSampleState extends ConsumerState<MapSample> {
             bottom: 400,
             right: 20,
             child: FloatingActionButton(
-              onPressed: () {},
-              child: const Icon(Icons.directions_boat),
+              onPressed: () => _moveCamera(),
+              backgroundColor: textColor,
+              child: const Icon(Icons.gps_fixed),
             ),
           ),
           Positioned(
@@ -124,7 +126,7 @@ class MapSampleState extends ConsumerState<MapSample> {
   }
 
   // 位置データを取得し、カメラを移動させるメソッド
-  Future<void> _moveCamera(WidgetRef ref) async {
+  Future<void> _moveCamera() async {
     position = await ref.refresh(locationProvider.future);
     final mapController = await _controller.future;
     final latitude = position?.latitude;

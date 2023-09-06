@@ -32,6 +32,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
   @override
   Widget build(BuildContext context) {
     final chargerSpotsAsyncProvider = ref.watch(chargerSpotsFutureProvider);
+    // TODO: statusでngの時にダイアログ出す
     // Widgetが初めてビルドされた後に呼び出す
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _moveCamera();
@@ -110,7 +111,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(latitude, longitude),
-          zoom: 17, // zoomは匙加減
+          zoom: 10, // zoomは匙加減
         ),
       ),
     );

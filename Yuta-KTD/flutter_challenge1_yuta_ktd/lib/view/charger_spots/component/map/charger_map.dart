@@ -17,6 +17,7 @@ class ChargerMap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: Zoomについては実機検証必要（そもそもズームさせる必要ある？）
     return GoogleMap(
       onTap: (_) => onTap,
       mapType: MapType.normal,

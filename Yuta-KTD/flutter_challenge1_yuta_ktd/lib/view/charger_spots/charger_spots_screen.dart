@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
 import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/charger_spots_info_card.dart';
-import 'package:flutter_challenge1_yuta_ktd/view_model/charger_spots_view_model.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/charger_spots_async_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,7 +29,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final chargerSpotsAsyncProvider = ref.watch(chargerSpotsFutureProvider);
+    final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
     // Widgetが初めてビルドされた後に呼び出す
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _moveCamera();
@@ -85,7 +85,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
                     showCard = true;
                   });
                 },
-                child: chargerSpotsAsyncProvider.when(
+                child: asyncChargerSpots.when(
                   data: (res) => ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: res.chargerSpots.length,

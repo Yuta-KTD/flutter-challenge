@@ -29,7 +29,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
+    final asyncChargerSpots = ref.watch(chargerSpotsFutureProvider);
     // Widgetが初めてビルドされた後に呼び出す
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _moveCamera();

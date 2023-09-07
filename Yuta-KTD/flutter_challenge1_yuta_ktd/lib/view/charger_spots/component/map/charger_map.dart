@@ -20,7 +20,7 @@ class ChargerMap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
+    final asyncChargerSpots = ref.watch(chargerSpotsFutureProvider);
     // TODO: Zoomについては実機検証必要（そもそもズームさせる必要ある？）
     return GoogleMap(
       onTap: (_) => onTap,

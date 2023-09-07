@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/models.dart';
 
-import '../../../../view_model/charger_spots_view_model.dart';
+import '../../../../provider/charger_spots_async_provider.dart';
 
 /// GoogleMap
 class ChargerMap extends ConsumerWidget {

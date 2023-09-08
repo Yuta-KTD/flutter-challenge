@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
-final locationProvider = FutureProvider((ref) async {
+final locationProvider = FutureProvider<Position?>((ref) async {
   bool serviceEnabled;
   LocationPermission permission;
 
@@ -28,5 +28,5 @@ final locationProvider = FutureProvider((ref) async {
   }
 
   //許可された場合、位置情報を返す
-  return Geolocator.getCurrentPosition();
+  return await Geolocator.getCurrentPosition();
 });

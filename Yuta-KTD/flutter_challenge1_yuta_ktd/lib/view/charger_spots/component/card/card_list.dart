@@ -15,7 +15,8 @@ class CardList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
-    final PageController controller = PageController();
+    // ここでカードの横幅指定
+    final PageController controller = PageController(viewportFraction: 0.9);
 
     return asyncChargerSpots.when(
       data: (res) => PageView.builder(

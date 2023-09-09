@@ -19,24 +19,21 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
         borderRadius: BorderRadius.circular(cardCircular),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: SizedBox(
-        width: 364.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 72.0,
-              child: _images(chargerSpot.images),
-            ),
-            CardTextInfo(
-              name: chargerSpot.name,
-              latitude: chargerSpot.latitude,
-              longitude: chargerSpot.longitude,
-              chargerSpotServiceTimes: chargerSpot.chargerSpotServiceTimes,
-              chargerDevices: chargerSpot.chargerDevices,
-            ),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 72.0,
+            child: _images(chargerSpot.images),
+          ),
+          CardTextInfo(
+            name: chargerSpot.name,
+            latitude: chargerSpot.latitude,
+            longitude: chargerSpot.longitude,
+            chargerSpotServiceTimes: chargerSpot.chargerSpotServiceTimes,
+            chargerDevices: chargerSpot.chargerDevices,
+          ),
+        ],
       ),
     );
   }
@@ -52,7 +49,6 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
       itemBuilder: (_, index) {
         final url = imagesUrl[index].url;
         // 最後の要素かどうかをチェック
-        // FIXME: 右側に少しだけ間隔が残ってしまっている
         bool isLast = index == imagesUrl.length - 1;
         return Container(
           width: 180.5,

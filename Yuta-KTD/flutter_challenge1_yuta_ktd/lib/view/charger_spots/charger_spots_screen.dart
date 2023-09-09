@@ -19,7 +19,6 @@ class ChargerSpotScreen extends ConsumerStatefulWidget {
 }
 
 class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
-  final Completer<GoogleMapController> controller = Completer();
   final Duration showCardDuration = const Duration(milliseconds: 400);
   Position? position;
   // カードをせり出すかどうか
@@ -31,21 +30,18 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          ChargerMap(
-            onTap: _onMapTap,
-            position: position,
-            controller: controller,
+          GestureDetector(
+            onTapDown: (_) => _onMapTapDown(),
+            child: const ChargerMap(),
           ),
           AnimatedPositioned(
             duration: showCardDuration,
             bottom: showCard ? 320.0 : 150.0,
             right: 16.0,
-            child: SizedBox(
+            child: const SizedBox(
               width: 62.0,
               height: 62.0,
-              child: CurrentLocationButton(
-                controller: controller,
-              ),
+              child: CurrentLocationButton(),
             ),
           ),
           AnimatedPositioned(
@@ -56,12 +52,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
             child: SizedBox(
               height: 272.0,
               child: GestureDetector(
-                onTapDown: (_) {
-                  if (showCard) return;
-                  setState(() {
-                    showCard = true;
-                  });
-                },
+                onTapDown: (_) => _onCardTapDown(),
                 child: const CardList(),
               ),
             ),
@@ -71,10 +62,17 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
     );
   }
 
-  void _onMapTap() {
+  void _onMapTapDown() {
     if (!showCard) return;
     setState(() {
       showCard = false;
+    });
+  }
+
+  void _onCardTapDown() {
+    if (showCard) return;
+    setState(() {
+      showCard = true;
     });
   }
 }

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/show_card_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../constant/decolation_style.dart';
 import '../../../../core/location/location_provider.dart';
-import '../../../../provider/charger_spots_async_provider.dart';
 import '../../../../provider/map_controller_completer_provider.dart';
 
 class CurrentLocationButton extends ConsumerStatefulWidget {
@@ -46,15 +46,7 @@ class _CurrentLocationButtonState extends ConsumerState<CurrentLocationButton> {
         ),
       ),
     );
-    final chargerSpotsNotifire = ref.read(chargerSpotsAsyncProvider.notifier);
-    final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
-    final LatLng southwest = visibleRegion.southwest;
-    final LatLng northeast = visibleRegion.northeast;
-    await chargerSpotsNotifire.serchChargerSpots(
-      swLat: southwest.latitude.toString(),
-      swLng: southwest.longitude.toString(),
-      neLat: northeast.latitude.toString(),
-      neLng: northeast.longitude.toString(),
-    );
+    final showCardNotifire = ref.read(showCardProvider.notifier);
+    showCardNotifire.state = false;
   }
 }

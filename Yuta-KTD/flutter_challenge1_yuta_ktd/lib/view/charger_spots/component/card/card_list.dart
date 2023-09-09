@@ -20,7 +20,7 @@ class CardList extends ConsumerWidget {
     final PageController controller = ref.watch(pageControllerProvider);
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
-    final showCardNotifire = ref.read(showCardProvider.notifier);
+    final showCardNotifire = ref.watch(showCardProvider.notifier);
 
     return asyncChargerSpots.when(
       data: (res) => PageView.builder(

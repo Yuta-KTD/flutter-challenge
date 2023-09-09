@@ -28,8 +28,8 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     final pageController = ref.watch(pageControllerProvider);
     final iconCardConnection = ref.watch(iconCardConnectProvider);
     final Completer<GoogleMapController> mapControllerCompleter =
-        ref.read(mapControllerCompleterProvider);
-    final showCardNotifire = ref.read(showCardProvider.notifier);
+        ref.watch(mapControllerCompleterProvider);
+    final showCardNotifire = ref.watch(showCardProvider.notifier);
     final markerManager = MarkerManager(
       pageController: pageController,
       iconCardConnection: iconCardConnection,
@@ -51,7 +51,8 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
             ),
             zoom: 15,
           ),
-          onMapCreated: _onMapCreated,
+          onMapCreated: (mapController) =>
+              _onMapCreated(mapController, mapControllerCompleter),
           myLocationButtonEnabled: false,
           onTap: (_) => showCardNotifire.state = false,
           markers: chargerSpotsProvider.when(
@@ -78,10 +79,8 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     );
   }
 
-  Future<void> _onMapCreated(GoogleMapController mapController) async {
-    final Completer<GoogleMapController> mapControllerCompleter =
-        ref.watch(mapControllerCompleterProvider);
-
+  Future<void> _onMapCreated(GoogleMapController mapController,
+      Completer<GoogleMapController> mapControllerCompleter) async {
     mapControllerCompleter.complete(mapController);
     final chargerSpotsNotifire = ref.read(chargerSpotsAsyncProvider.notifier);
     // FIXME: 遅延を入れないと現在表示領域が地図全体(LatLng(-90.0, -180.0))なってしまう

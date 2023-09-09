@@ -53,7 +53,7 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
           ),
           onMapCreated: _onMapCreated,
           myLocationButtonEnabled: false,
-          onTap: (_) => closeCard(showCardNotifire),
+          onTap: (_) => showCardNotifire.state = false,
           markers: chargerSpotsProvider.when(
             data: (res) {
               return markerManager.createMarkers(
@@ -97,11 +97,5 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
       neLat: northeast.latitude.toString(),
       neLng: northeast.longitude.toString(),
     );
-  }
-
-  void closeCard(StateController<bool> showCardNotifire) {
-    final state = showCardNotifire.state;
-    if (!state) return;
-    showCardNotifire.state = false;
   }
 }

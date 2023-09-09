@@ -2,15 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
-import 'package:flutter_challenge1_yuta_ktd/datastore/charger_spots_datastore_provider.dart';
-import 'package:flutter_challenge1_yuta_ktd/provider/charger_spots_async_provider.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/card/card_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../core/location/location_provider.dart';
-import 'component/card/charger_spots_info_card.dart';
 import 'component/map/charger_map.dart';
 import 'component/map/current_location_button.dart';
 
@@ -34,7 +30,6 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
   @override
   Widget build(BuildContext context) {
     // TODO: statusでngの時にダイアログ出す
-    final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -42,8 +37,6 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
             onTap: _onMapTap,
             position: position,
             controller: controller,
-
-            // onMapCreated: _onMapCreated,
           ),
           AnimatedPositioned(
             duration: showCardDuration,
@@ -71,23 +64,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
                     showCard = true;
                   });
                 },
-                child: asyncChargerSpots.when(
-                  data: (res) => ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: res.chargerSpots.length,
-                      itemBuilder: (_, index) {
-                        final data = res.chargerSpots[index];
-                        return ChargerSpotsInfoCard(chargerSpot: data);
-                      }),
-                  error: (error, _) {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(content: Text(error.toString())),
-                    // );
-                    return _errorLoading(const Text('通信エラーです'));
-                  },
-                  loading: () =>
-                      _errorLoading(const CircularProgressIndicator()),
-                ),
+                child: const CardList(),
               ),
             ),
           ),
@@ -101,12 +78,5 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
     setState(() {
       showCard = false;
     });
-  }
-
-  Widget _errorLoading(Widget child) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: child,
-    );
   }
 }

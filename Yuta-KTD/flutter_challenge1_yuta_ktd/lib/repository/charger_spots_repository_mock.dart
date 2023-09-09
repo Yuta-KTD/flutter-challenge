@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_single_quotes
-
+// NOTE: モック用リポジトリ
 import 'package:flutter/material.dart';
 import 'package:openapi/models.dart';
 

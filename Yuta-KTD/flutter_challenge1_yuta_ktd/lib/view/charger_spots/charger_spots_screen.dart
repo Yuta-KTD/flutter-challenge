@@ -10,8 +10,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'component/map/charger_map.dart';
 import 'component/map/current_location_button.dart';
 
-// TODO: GoogleMapを呼び出したいフェーズに移ったら削除
-
 class ChargerSpotScreen extends ConsumerStatefulWidget {
   const ChargerSpotScreen({Key? key}) : super(key: key);
 

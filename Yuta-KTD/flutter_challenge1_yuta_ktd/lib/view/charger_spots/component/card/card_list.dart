@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/map_controller_completer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
 
 import '../../../../provider/charger_spots_async_provider.dart';
@@ -39,11 +43,19 @@ class CardList extends ConsumerWidget {
 
   Future<void> _onPageChanged(
       int value, charger_spot_res.Response res, WidgetRef ref) async {
-    final asyncChargerSpotsNotifire =
-        ref.read(chargerSpotsAsyncProvider.notifier);
-    // カードのUUIDを元に検索
-    await asyncChargerSpotsNotifire.serchChargerSpots(
-        uuid: res.chargerSpots[value].uuid);
+    final Completer<GoogleMapController> mapControllerCompleter =
+        ref.watch(mapControllerCompleterProvider);
+    final mapController = await mapControllerCompleter.future;
+    final latitude = res.chargerSpots[value].latitude.toDouble();
+    final longitude = res.chargerSpots[value].longitude.toDouble();
+    await mapController.moveCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(latitude, longitude),
+          zoom: 15,
+        ),
+      ),
+    );
   }
 
   Widget _errorLoading(Widget child) {

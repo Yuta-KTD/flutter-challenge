@@ -89,10 +89,11 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
       // LatLngではdoubleが引数なので変換する
       final lat = chargerSpot.latitude.toDouble();
       final lng = chargerSpot.longitude.toDouble();
+      final latLng = LatLng(lat, lng);
       markers.add(Marker(
         markerId: MarkerId(chargerSpot.uuid),
-        position: LatLng(lat, lng),
-        onTap: () => _onTap(chargerSpot.uuid),
+        position: latLng,
+        onTap: () => _onTap(latLng),
         // TODO: アイコン画像作る
         // icon:
       ));
@@ -101,9 +102,17 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     return markers;
   }
 
-  _onTap(String uuid) {
-    // TODO: 検索する
-    // StateNotifireとかでやってあげればいいかな
-    print(uuid);
+  _onTap(LatLng latLng) async {
+    final Completer<GoogleMapController> mapControllerCompleter =
+        ref.watch(mapControllerCompleterProvider);
+    final mapController = await mapControllerCompleter.future;
+    await mapController.moveCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: latLng,
+          zoom: 15,
+        ),
+      ),
+    );
   }
 }

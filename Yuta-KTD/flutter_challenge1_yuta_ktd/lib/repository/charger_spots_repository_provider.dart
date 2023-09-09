@@ -8,6 +8,6 @@ import 'charger_spots_repository_interface.dart';
 final chargerSpotsRepositoryProvider =
     Provider.autoDispose<ChargerSpotsRepositoryInterface>(
   // TODO: 504解消するまでモック化
-  (ref) => ChargerSpotsRepositoryMock(
+  (ref) => ChargerSpotsRepository(
       dataStore: ref.read(chargerSpotsDataStoreProvider)),
 );

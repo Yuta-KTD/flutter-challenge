@@ -24,6 +24,8 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
   @override
   Widget build(BuildContext context) {
     final chargerSpotsProvider = ref.watch(chargerSpotsAsyncProvider);
+    final pageController = ref.watch(pageControllerProvider);
+    final iconCardConnection = ref.watch(iconCardConnectProvider);
 
     // TODO: Zoomについては実機検証必要
     final locationAsyncValue = ref.watch(locationProvider);
@@ -43,7 +45,11 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
           myLocationButtonEnabled: false,
           markers: chargerSpotsProvider.when(
             data: (res) {
-              return _markers(res.chargerSpots);
+              return _markers(
+                res.chargerSpots,
+                pageController,
+                iconCardConnection,
+              );
             },
             error: (error, _) {
               // ScaffoldMessenger.of(context).showSnackBar(
@@ -66,6 +72,7 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
   Future<void> _onMapCreated(GoogleMapController mapController) async {
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
+
     mapControllerCompleter.complete(mapController);
     final chargerSpotsNotifire = ref.read(chargerSpotsAsyncProvider.notifier);
     // FIXME: 遅延を入れないと現在表示領域が地図全体(LatLng(-90.0, -180.0))なってしまう
@@ -83,7 +90,11 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     );
   }
 
-  Set<Marker> _markers(List<ChargerSpot> chargerSpots) {
+  Set<Marker> _markers(
+    List<ChargerSpot> chargerSpots,
+    PageController pageController,
+    AsyncValue<Map<String, int>> iconCardConnection,
+  ) {
     final markers = <Marker>{};
     // return markers;
     for (var chargerSpot in chargerSpots) {
@@ -94,7 +105,12 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
       markers.add(Marker(
         markerId: MarkerId(chargerSpot.uuid),
         position: latLng,
-        onTap: () => _onTap(latLng, chargerSpot.uuid),
+        onTap: () => _onTap(
+          latLng: latLng,
+          uuid: chargerSpot.uuid,
+          pageController: pageController,
+          iconCardConnection: iconCardConnection,
+        ),
         // TODO: アイコン画像作る
         // icon:
       ));
@@ -103,7 +119,12 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     return markers;
   }
 
-  _onTap(LatLng latLng, String uuid) async {
+  _onTap({
+    required LatLng latLng,
+    required String uuid,
+    required PageController pageController,
+    required AsyncValue<Map<String, int>> iconCardConnection,
+  }) async {
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.read(mapControllerCompleterProvider);
     final mapController = await mapControllerCompleter.future;
@@ -115,11 +136,12 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
         ),
       ),
     );
-    final pageController = ref.read(pageControllerProvider);
-    final iconCardConnection = ref.read(iconCardConnectProvider);
-    print(pageController);
-    inspect(iconCardConnection);
-    // final showPageIndex = iconCardConnection
-    //     .whenData((value) => value.map((index, value) => value == uuid));
+    // 配列取得失敗や、配列の中身がないときは動かさない
+    if (iconCardConnection.hasError || iconCardConnection.value!.isEmpty) {
+      return;
+    }
+    // アイコンに対応するカードを表示する
+    final cardIndex = iconCardConnection.value![uuid];
+    pageController.jumpToPage(cardIndex!);
   }
 }

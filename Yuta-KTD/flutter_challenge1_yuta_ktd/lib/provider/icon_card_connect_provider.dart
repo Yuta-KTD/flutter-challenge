@@ -4,11 +4,11 @@ import 'package:openapi/model/response.dart' as charger_spot_res;
 
 /// cardのindexをキー、スポットのUUIDをvalueとしてもつカード切り替え用Provider
 final iconCardConnectProvider =
-    FutureProvider.autoDispose<Map<int, dynamic>>((ref) async {
+    FutureProvider.autoDispose<Map<String, int>>((ref) async {
   final charger_spot_res.Response chargerSpotsAsyncValue =
       await ref.watch(chargerSpotsAsyncProvider.future);
-  final Map<int, dynamic> iconCard = chargerSpotsAsyncValue.chargerSpots
+  final Map<String, int> iconCard = chargerSpotsAsyncValue.chargerSpots
       .asMap()
-      .map((index, chargerSpot) => MapEntry(index, chargerSpot.uuid));
+      .map((index, chargerSpot) => MapEntry(chargerSpot.uuid, index));
   return iconCard;
 });

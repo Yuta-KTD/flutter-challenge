@@ -27,23 +27,26 @@ class AvailableCharger extends StatelessWidget {
           child: const CardText('利用可能'),
         ),
         RichText(
-            text: TextSpan(
-          style: const TextStyle(
-            fontSize: 14.0,
-            color: textColor,
-          ),
-          children: [
-            TextSpan(
-              text: availableDevices.toString(),
-              style: TextStyle(
-                fontSize: 14.0,
-                color: availableDevices == 0 ? noChargerColor : availableColor,
-              ),
+          strutStyle: const StrutStyle(height: 1.35, fontSize: 14.0),
+          text: TextSpan(
+            style: const TextStyle(
+              fontSize: 14.0,
+              color: textColor,
             ),
-            const TextSpan(text: '/'),
-            TextSpan(text: allDevices.toString()),
-          ],
-        )),
+            children: [
+              TextSpan(
+                text: availableDevices.toString(),
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color:
+                      availableDevices == 0 ? noChargerColor : availableColor,
+                ),
+              ),
+              const TextSpan(text: '/'),
+              TextSpan(text: allDevices.toString()),
+            ],
+          ),
+        ),
       ],
     );
   }

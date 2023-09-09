@@ -8,20 +8,13 @@ import '../card_text.dart';
 
 /// 営業時間に関する情報を出力する
 class BusinessHours extends StatelessWidget {
-  final List<ChargerSpotServiceTime?> chargerSpotServiceTimes;
+  final List<ChargerSpotServiceTime> chargerSpotServiceTimes;
   const BusinessHours(this.chargerSpotServiceTimes, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (chargerSpotServiceTimes.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    final ChargerSpotServiceTime? todayServiceTime = chargerSpotServiceTimes
-        .singleWhere((element) => element!.today, orElse: () => null);
-    if (todayServiceTime == null) {
-      return const SizedBox.shrink();
-    }
+    final ChargerSpotServiceTime todayServiceTime =
+        chargerSpotServiceTimes.singleWhere((element) => element.today);
 
     final isBusinessDay = todayServiceTime.businessDay == BusinessDay.yes;
     final startTime = todayServiceTime.startTime;

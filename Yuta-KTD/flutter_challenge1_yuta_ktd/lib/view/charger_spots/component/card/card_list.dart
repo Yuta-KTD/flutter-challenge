@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/map_controller_completer_provider.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/page_controller_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
@@ -15,8 +16,9 @@ class CardList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncChargerSpots = ref.watch(chargerSpotsAsyncProvider);
-    // ここでカードの横幅指定
-    final PageController controller = PageController(viewportFraction: 0.9);
+    final PageController controller = ref.watch(pageControllerProvider);
+    final Completer<GoogleMapController> mapControllerCompleter =
+        ref.watch(mapControllerCompleterProvider);
 
     return asyncChargerSpots.when(
       data: (res) => PageView.builder(
@@ -27,7 +29,7 @@ class CardList extends ConsumerWidget {
           return ChargerSpotsInfoCard(chargerSpot: data);
         },
         onPageChanged: (value) async {
-          await _onPageChanged(value, res, ref);
+          await _onPageChanged(value, res, mapControllerCompleter);
         },
       ),
       error: (error, _) {
@@ -43,9 +45,10 @@ class CardList extends ConsumerWidget {
   }
 
   Future<void> _onPageChanged(
-      int value, charger_spot_res.Response res, WidgetRef ref) async {
-    final Completer<GoogleMapController> mapControllerCompleter =
-        ref.watch(mapControllerCompleterProvider);
+    int value,
+    charger_spot_res.Response res,
+    Completer<GoogleMapController> mapControllerCompleter,
+  ) async {
     final mapController = await mapControllerCompleter.future;
     final latitude = res.chargerSpots[value].latitude.toDouble();
     final longitude = res.chargerSpots[value].longitude.toDouble();

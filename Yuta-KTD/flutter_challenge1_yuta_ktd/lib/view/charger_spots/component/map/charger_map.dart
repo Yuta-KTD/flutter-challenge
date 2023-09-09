@@ -3,14 +3,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/page_controller_provider.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/show_card_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:openapi/models.dart';
 
 import '../../../../core/location/location_provider.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
 import '../../../../provider/icon_card_connect_provider.dart';
 import '../../../../provider/map_controller_completer_provider.dart';
+import 'marker_manager.dart';
 
 /// GoogleMap
 class ChargerMap extends ConsumerStatefulWidget {
@@ -26,6 +27,15 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     final chargerSpotsProvider = ref.watch(chargerSpotsAsyncProvider);
     final pageController = ref.watch(pageControllerProvider);
     final iconCardConnection = ref.watch(iconCardConnectProvider);
+    final Completer<GoogleMapController> mapControllerCompleter =
+        ref.read(mapControllerCompleterProvider);
+    final showCardNotifire = ref.read(showCardProvider.notifier);
+    final markerManager = MarkerManager(
+      pageController: pageController,
+      iconCardConnection: iconCardConnection,
+      mapControllerCompleter: mapControllerCompleter,
+      showCardNotifire: showCardNotifire,
+    );
 
     // TODO: Zoomについては実機検証必要
     final locationAsyncValue = ref.watch(locationProvider);
@@ -43,12 +53,11 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
           ),
           onMapCreated: _onMapCreated,
           myLocationButtonEnabled: false,
+          onTap: (_) => closeCard(showCardNotifire),
           markers: chargerSpotsProvider.when(
             data: (res) {
-              return _markers(
-                res.chargerSpots,
-                pageController,
-                iconCardConnection,
+              return markerManager.createMarkers(
+                chargerSpots: res.chargerSpots,
               );
             },
             error: (error, _) {
@@ -90,58 +99,9 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     );
   }
 
-  Set<Marker> _markers(
-    List<ChargerSpot> chargerSpots,
-    PageController pageController,
-    AsyncValue<Map<String, int>> iconCardConnection,
-  ) {
-    final markers = <Marker>{};
-    // return markers;
-    for (var chargerSpot in chargerSpots) {
-      // LatLngではdoubleが引数なので変換する
-      final lat = chargerSpot.latitude.toDouble();
-      final lng = chargerSpot.longitude.toDouble();
-      final latLng = LatLng(lat, lng);
-      markers.add(Marker(
-        markerId: MarkerId(chargerSpot.uuid),
-        position: latLng,
-        onTap: () => _onTap(
-          latLng: latLng,
-          uuid: chargerSpot.uuid,
-          pageController: pageController,
-          iconCardConnection: iconCardConnection,
-        ),
-        // TODO: アイコン画像作る
-        // icon:
-      ));
-    }
-    // print(markers);
-    return markers;
-  }
-
-  _onTap({
-    required LatLng latLng,
-    required String uuid,
-    required PageController pageController,
-    required AsyncValue<Map<String, int>> iconCardConnection,
-  }) async {
-    final Completer<GoogleMapController> mapControllerCompleter =
-        ref.read(mapControllerCompleterProvider);
-    final mapController = await mapControllerCompleter.future;
-    await mapController.moveCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: latLng,
-          zoom: 15,
-        ),
-      ),
-    );
-    // 配列取得失敗や、配列の中身がないときは動かさない
-    if (iconCardConnection.hasError || iconCardConnection.value!.isEmpty) {
-      return;
-    }
-    // アイコンに対応するカードを表示する
-    final cardIndex = iconCardConnection.value![uuid];
-    pageController.jumpToPage(cardIndex!);
+  void closeCard(StateController<bool> showCardNotifire) {
+    final state = showCardNotifire.state;
+    if (!state) return;
+    showCardNotifire.state = false;
   }
 }

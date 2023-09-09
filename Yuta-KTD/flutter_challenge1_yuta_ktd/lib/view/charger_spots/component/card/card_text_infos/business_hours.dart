@@ -14,7 +14,20 @@ class BusinessHours extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (chargerSpotServiceTimes.isEmpty) {
-      return const SizedBox.shrink();
+      return SizedBox(
+        height: 19.0,
+        child: Row(
+          children: [
+            CardTextInfoTitle(
+              // unKnownの場合も営業時間外とする
+              title: '営業中',
+              color: availableColor,
+              image: Assets.watchLator.image(width: 16.0, height: 16.0),
+            ),
+          ],
+        ),
+      );
+      ;
     }
 
     final ChargerSpotServiceTime? todayServiceTime = chargerSpotServiceTimes

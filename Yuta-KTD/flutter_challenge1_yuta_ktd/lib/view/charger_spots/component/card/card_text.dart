@@ -18,6 +18,7 @@ class CardText extends StatelessWidget {
           fontWeight: FontWeight.normal,
           color: color ?? textColor,
         ),
+        strutStyle: const StrutStyle(height: 1.4, fontSize: 14.0),
       ),
     );
   }

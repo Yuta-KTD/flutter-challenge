@@ -28,14 +28,13 @@ class CardTextInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      width: 365.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _cardTitle(name),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 10.0),
           AvailableCharger(chargerDevices),
           heightBox12,
           ChargerPower(chargerDevices),
@@ -54,7 +53,7 @@ class CardTextInfo extends StatelessWidget {
 
   Widget _cardTitle(String name) {
     return SizedBox(
-      height: 25.0,
+      height: 23.0,
       child: Text(
         name,
         style: const TextStyle(

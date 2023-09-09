@@ -7,16 +7,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../constant/decolation_style.dart';
 import '../../../../core/location/location_provider.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
+import '../../../../provider/map_controller_completer_provider.dart';
 
-class CurrentLocationButton extends ConsumerWidget {
-  final Completer<GoogleMapController> controller;
-  const CurrentLocationButton({
-    super.key,
-    required this.controller,
-  });
+class CurrentLocationButton extends ConsumerStatefulWidget {
+  const CurrentLocationButton({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CurrentLocationButtonState();
+}
+
+class _CurrentLocationButtonState extends ConsumerState<CurrentLocationButton> {
+  @override
+  Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => _moveCamera(ref),
       backgroundColor: textColor,
@@ -27,7 +30,9 @@ class CurrentLocationButton extends ConsumerWidget {
   // 位置データを取得し、カメラを移動させる
   Future<void> _moveCamera(WidgetRef ref) async {
     final position = await ref.refresh(locationProvider.future);
-    final mapController = await controller.future;
+    final Completer<GoogleMapController> mapControllerCompleter =
+        ref.watch(mapControllerCompleterProvider);
+    final mapController = await mapControllerCompleter.future;
     final latitude = position?.latitude;
     final longitude = position?.longitude;
     if (latitude == null || longitude == null) {

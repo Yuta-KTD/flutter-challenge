@@ -66,20 +66,20 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
         ref.watch(mapControllerCompleterProvider);
     mapControllerCompleter.complete(mapController);
     // TODO: 504返ってくるので一旦通信止める
-    // final chargerSpotsNotifire = ref.read(chargerSpotsAsyncProvider.notifier);
+    final chargerSpotsNotifire = ref.read(chargerSpotsAsyncProvider.notifier);
     // FIXME: 遅延を入れないと現在表示領域が地図全体(LatLng(-90.0, -180.0)みたいに)なってしまう
     // もっとロバストな方法を考える
-    // await Future.delayed(const Duration(seconds: 1));
-    // final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
-    // inspect(visibleRegion);
-    // final LatLng southwest = visibleRegion.southwest;
-    // final LatLng northeast = visibleRegion.northeast;
-    // await chargerSpotsNotifire.serchChargerSpots(
-    //   swLat: southwest.latitude.toString(),
-    //   swLng: southwest.longitude.toString(),
-    //   neLat: northeast.latitude.toString(),
-    //   neLng: northeast.longitude.toString(),
-    // );
+    await Future.delayed(const Duration(seconds: 1));
+    final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
+    inspect(visibleRegion);
+    final LatLng southwest = visibleRegion.southwest;
+    final LatLng northeast = visibleRegion.northeast;
+    await chargerSpotsNotifire.serchChargerSpots(
+      swLat: southwest.latitude.toString(),
+      swLng: southwest.longitude.toString(),
+      neLat: northeast.latitude.toString(),
+      neLng: northeast.longitude.toString(),
+    );
   }
 
   Set<Marker> _markers(List<ChargerSpot> chargerSpots) {

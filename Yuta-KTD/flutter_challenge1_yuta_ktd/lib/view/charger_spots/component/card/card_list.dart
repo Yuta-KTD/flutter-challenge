@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/map_controller_completer_provider.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/page_controller_provider.dart';
+import 'package:flutter_challenge1_yuta_ktd/provider/show_card_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
@@ -19,6 +20,7 @@ class CardList extends ConsumerWidget {
     final PageController controller = ref.watch(pageControllerProvider);
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
+    final showCardNotifire = ref.read(showCardProvider.notifier);
 
     return asyncChargerSpots.when(
       data: (res) => PageView.builder(
@@ -26,7 +28,10 @@ class CardList extends ConsumerWidget {
         itemCount: res.chargerSpots.length,
         itemBuilder: (_, index) {
           final data = res.chargerSpots[index];
-          return ChargerSpotsInfoCard(chargerSpot: data);
+          return GestureDetector(
+            onTapDown: (_) => _onCardTapDown(showCardNotifire),
+            child: ChargerSpotsInfoCard(chargerSpot: data),
+          );
         },
         onPageChanged: (value) async {
           await _onPageChanged(value, res, mapControllerCompleter);
@@ -42,6 +47,12 @@ class CardList extends ConsumerWidget {
         const CircularProgressIndicator(),
       ),
     );
+  }
+
+  void _onCardTapDown(StateController<bool> showCardNotifire) {
+    final state = showCardNotifire.state;
+    if (state) return;
+    showCardNotifire.state = true;
   }
 
   Future<void> _onPageChanged(

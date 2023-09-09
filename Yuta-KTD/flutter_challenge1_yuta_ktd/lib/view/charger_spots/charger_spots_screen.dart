@@ -58,7 +58,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
             child: SizedBox(
               height: 272.0,
               child: GestureDetector(
-                onTap: () {
+                onTapDown: (_) {
                   if (showCard) return;
                   setState(() {
                     showCard = true;

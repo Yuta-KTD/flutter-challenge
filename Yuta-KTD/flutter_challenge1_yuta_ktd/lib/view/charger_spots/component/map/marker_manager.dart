@@ -63,8 +63,6 @@ class MarkerManager {
     final cardIndex = iconCardConnection.value![uuid];
     pageController.jumpToPage(cardIndex!);
     // カードをせり出させる
-    final state = showCardNotifire.state;
-    if (state) return;
     showCardNotifire.state = true;
   }
 }

@@ -5,4 +5,4 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 /// GoogleMapControllerの非同期処理用プロバイダー
 final mapControllerCompleterProvider =
-    Provider<Completer<GoogleMapController>>((ref) => Completer());
+    Provider.autoDispose<Completer<GoogleMapController>>((ref) => Completer());

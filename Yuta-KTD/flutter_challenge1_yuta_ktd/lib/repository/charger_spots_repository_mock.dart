@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/models.dart';
 
-import '../datastore/charger_spots_datastore_interface.dart';
+import '../datasource/charger_spots_datasource_interface.dart';
 import 'charger_spots_repository_interface.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
 
@@ -11,8 +11,8 @@ import '../model/charger_spots_request.dart';
 import 'dart:math';
 
 class ChargerSpotsRepositoryMock implements ChargerSpotsRepositoryInterface {
-  final ChargerSpotsDataStoreInterface dataStore;
-  ChargerSpotsRepositoryMock({required this.dataStore});
+  final ChargerSpotsDataSourceInterface dataSource;
+  ChargerSpotsRepositoryMock({required this.dataSource});
 
   @override
   Future<charger_spot_res.Response> fetchChargerSpots(

@@ -40,7 +40,7 @@ TODO: 詳細記載する
 ├── constant: API接続先や、基本的なUIスタイルの定数を管理
 ├── core:  
 │   └── location
-├── datastore: 
+├── datasource: 
 ├── gen
 ├── model
 ├── provider

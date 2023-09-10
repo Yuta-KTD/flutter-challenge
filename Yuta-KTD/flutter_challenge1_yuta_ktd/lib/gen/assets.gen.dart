@@ -15,6 +15,7 @@ class Assets {
   static const AssetGenImage bolt = AssetGenImage('assets/bolt.png');
   static const AssetGenImage cardWhenNoImages =
       AssetGenImage('assets/cardWhenNoImages.png');
+  static const AssetGenImage pin = AssetGenImage('assets/pin.png');
   static const AssetGenImage power = AssetGenImage('assets/power.png');
   static const AssetGenImage today = AssetGenImage('assets/today.png');
   static const AssetGenImage watchLator =
@@ -22,7 +23,7 @@ class Assets {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [bolt, cardWhenNoImages, power, today, watchLator];
+      [bolt, cardWhenNoImages, pin, power, today, watchLator];
 }
 
 class AssetGenImage {

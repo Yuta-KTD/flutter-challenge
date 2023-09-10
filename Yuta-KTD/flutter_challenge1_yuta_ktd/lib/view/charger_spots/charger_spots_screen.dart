@@ -23,31 +23,33 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
   Widget build(BuildContext context) {
     final showCard = ref.watch(showCardProvider);
     // TODO: statusでngの時にダイアログ出す
-    return Scaffold(
-      body: Stack(
-        children: [
-          const ChargerMap(),
-          AnimatedPositioned(
-            duration: showCardDuration,
-            bottom: showCard ? 320.0 : 150.0,
-            right: 16.0,
-            child: const SizedBox(
-              width: 62.0,
-              height: 62.0,
-              child: CurrentLocationButton(),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            const ChargerMap(),
+            AnimatedPositioned(
+              duration: showCardDuration,
+              bottom: showCard ? 320.0 : 150.0,
+              right: 16.0,
+              child: const SizedBox(
+                width: 62.0,
+                height: 62.0,
+                child: CurrentLocationButton(),
+              ),
             ),
-          ),
-          AnimatedPositioned(
-            duration: showCardDuration,
-            left: 0,
-            right: 0,
-            bottom: showCard ? 40 : -130.0,
-            child: const SizedBox(
-              height: 272.0,
-              child: CardList(),
+            AnimatedPositioned(
+              duration: showCardDuration,
+              left: 0,
+              right: 0,
+              bottom: showCard ? 40 : -130.0,
+              child: const SizedBox(
+                height: 272.0,
+                child: CardList(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

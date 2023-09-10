@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'component/map/charger_map.dart';
 import 'component/map/current_location_button.dart';
+import 'component/search_current_area_button.dart';
 
 class ChargerSpotScreen extends ConsumerStatefulWidget {
   const ChargerSpotScreen({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
         body: Stack(
           children: [
             const ChargerMap(),
+            const SearchCurrentAreaButton(),
             AnimatedPositioned(
               duration: showCardDuration,
               bottom: showCard ? 320.0 : 150.0,

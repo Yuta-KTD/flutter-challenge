@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge1_yuta_ktd/provider/map_marker_async_provider.dart';
-import 'package:flutter_challenge1_yuta_ktd/provider/show_card_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/location/location_provider.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
 import '../../../../provider/map_controller_completer_provider.dart';
+import '../../../../provider/map_marker_async_provider.dart';
+import '../../../../provider/show_card_provider.dart';
+import '../../../../provider/show_search_button_provider.dart';
 
 /// GoogleMap
 class ChargerMap extends ConsumerStatefulWidget {
@@ -23,7 +24,6 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
   Widget build(BuildContext context) {
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
-    final showCardNotifire = ref.watch(showCardProvider.notifier);
     final markersAsyncValue = ref.watch(mapMarkerAsyncProvider);
 
     // TODO: Zoomについては実機検証必要
@@ -43,7 +43,15 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
           onMapCreated: (mapController) =>
               _onMapCreated(mapController, mapControllerCompleter),
           myLocationButtonEnabled: false,
-          onTap: (_) => showCardNotifire.state = false,
+          onTap: (_) {
+            final showCardNotifire = ref.watch(showCardProvider.notifier);
+            showCardNotifire.state = false;
+          },
+          onCameraMoveStarted: () {
+            final showSearchButtonNotifire =
+                ref.read(showSearchButtonProvider.notifier);
+            showSearchButtonNotifire.state = true;
+          },
           markers: markersAsyncValue.when(
             data: (res) {
               return res;

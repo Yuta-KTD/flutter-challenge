@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/map/generate_marker_icon.dart';
@@ -32,7 +31,6 @@ class MarkerManager {
       final chargerCount = chargerSpot.chargerDevices.length;
       final Uint8List iconImage =
           await customIconWithNumber.generateImage(chargerCount);
-      inspect(iconImage);
       final latLng = LatLng(lat, lng);
       markers.add(Marker(
         markerId: MarkerId(chargerSpot.uuid),

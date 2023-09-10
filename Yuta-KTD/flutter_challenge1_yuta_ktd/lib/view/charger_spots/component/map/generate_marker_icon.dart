@@ -1,6 +1,4 @@
 import 'dart:ui' as ui;
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
@@ -10,7 +8,7 @@ import '../../../../constant/decolation_style.dart';
 class CustomIconWithNumber {
   CustomIconWithNumber();
 
-  Future<Uint8List> generateImage(int number) async {
+  Future<Uint8List> generateImage(int chargerCount) async {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
     final paint = Paint()..isAntiAlias = true;
@@ -18,41 +16,45 @@ class CustomIconWithNumber {
     final String imgPath = Assets.pin.path;
     final rawData = await rootBundle.load(imgPath);
     final imgList = Uint8List.view(rawData.buffer);
-    print(imgList);
     final img = await decodeImageFromList(Uint8List.fromList(imgList));
-
-    // FIXME: 画像小さすぎる
+    canvas.scale(2);
     canvas.drawImage(img, const Offset(0, 0), paint);
 
-    // FIXME: 数字を入れると画像が見えなくなる
-    // final span = TextSpan(
-    //   style: const TextStyle(
-    //     color: textColor,
-    //     fontSize: 4,
-    //   ),
-    //   text: number.toString(),
-    // );
+    final chargerCountString = chargerCount.toString();
 
-    // final textPainter = TextPainter(
-    //   text: span,
-    //   textAlign: TextAlign.left,
-    //   textDirection: TextDirection.ltr,
-    // );
+    final textSpan = TextSpan(
+      style: const TextStyle(
+        color: textColor,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+      text: chargerCountString,
+    );
 
-    // textPainter.layout();
-    // textPainter.paint(canvas, const Offset(16, 26));
+    final textPainter = TextPainter(
+      text: textSpan,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
 
-    try {
-      final picture = recorder.endRecording();
-      final image = await picture.toImage(img.width, img.height);
-      final imageByte = await image.toByteData(format: ui.ImageByteFormat.png);
-      return imageByte!.buffer.asUint8List();
-    } catch (e) {
-      print('errro!!!!: ${e.toString()}');
-      final picture = recorder.endRecording();
-      final image = await picture.toImage(img.width, img.height);
-      final imageByte = await image.toByteData(format: ui.ImageByteFormat.png);
-      return imageByte!.buffer.asUint8List();
-    }
+    textPainter.layout();
+    // 画像の中心座標を計算
+    final imgCenterX = img.width / 2;
+    final imgCenterY = img.height / 2;
+    // テキストの中心座標を計算
+    final textCenterX = textPainter.width;
+    final textCenterY = textPainter.height / 2;
+
+    // テキストが画像の中心に配置されるようにオフセットを計算
+    // NOTE: 横軸座標調整のための切り上げと加算
+    // TODO: もう少しいい計算方法ないか考える
+    final offsetX = (imgCenterX - textCenterX).ceil().toDouble() + 1;
+    final offsetY = (imgCenterY - textCenterY);
+
+    textPainter.paint(canvas, Offset(offsetX, offsetY / 2));
+    final picture = recorder.endRecording();
+    final image = await picture.toImage(img.width * 2, img.height * 2);
+    final imageByte = await image.toByteData(format: ui.ImageByteFormat.png);
+    return imageByte!.buffer.asUint8List();
   }
 }

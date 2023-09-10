@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:typed_data';
 
+import 'package:flutter_challenge1_yuta_ktd/view/charger_spots/component/map/generate_marker_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/models.dart';
@@ -18,15 +21,23 @@ class MarkerManager {
     required this.showCardNotifire,
   });
 
-  Set<Marker> createMarkers({required List<ChargerSpot> chargerSpots}) {
+  Future<Set<Marker>> createMarkers(
+      {required List<ChargerSpot> chargerSpots}) async {
+    final customIconWithNumber = CustomIconWithNumber();
     final markers = <Marker>{};
     for (var chargerSpot in chargerSpots) {
       final lat = chargerSpot.latitude.toDouble();
       final lng = chargerSpot.longitude.toDouble();
+      // アイコン用画像生成
+      final chargerCount = chargerSpot.chargerDevices.length;
+      final Uint8List iconImage =
+          await customIconWithNumber.generateImage(chargerCount);
+      inspect(iconImage);
       final latLng = LatLng(lat, lng);
       markers.add(Marker(
         markerId: MarkerId(chargerSpot.uuid),
         position: latLng,
+        icon: BitmapDescriptor.fromBytes(iconImage),
         onTap: () => _onTap(
           latLng: latLng,
           uuid: chargerSpot.uuid,

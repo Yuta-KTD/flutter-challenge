@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/map_marker_async_provider.dart';
@@ -75,7 +74,6 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     // もっとロバストな方法を考える
     await Future.delayed(const Duration(seconds: 1));
     final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
-    inspect(visibleRegion);
     final LatLng southwest = visibleRegion.southwest;
     final LatLng northeast = visibleRegion.northeast;
     await chargerSpotsNotifire.serchChargerSpots(

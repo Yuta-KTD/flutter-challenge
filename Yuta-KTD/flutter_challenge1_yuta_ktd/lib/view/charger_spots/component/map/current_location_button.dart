@@ -6,10 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../constant/decolation_style.dart';
 import '../../../../core/location/location_provider.dart';
+import '../../../../provider/charger_spots_async_provider.dart';
 import '../../../../provider/map_controller_completer_provider.dart';
 import '../../../../provider/show_card_provider.dart';
 import '../../../../provider/show_search_button_provider.dart';
 
+/// 現在位置表示ボタン
 class CurrentLocationButton extends ConsumerStatefulWidget {
   const CurrentLocationButton({super.key});
 
@@ -47,10 +49,7 @@ class _CurrentLocationButtonState extends ConsumerState<CurrentLocationButton> {
         ),
       ),
     );
-    final showCardNotifire = ref.read(showCardProvider.notifier);
-    showCardNotifire.state = false;
-    final showSearchButtonNotifire =
-        ref.read(showSearchButtonProvider.notifier);
-    showSearchButtonNotifire.state = false;
+    ref.read(showCardProvider.notifier).state = false;
+    ref.read(showSearchButtonProvider.notifier).state = false;
   }
 }

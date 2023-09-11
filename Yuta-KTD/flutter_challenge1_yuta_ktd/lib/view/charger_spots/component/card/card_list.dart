@@ -23,6 +23,19 @@ class CardList extends ConsumerWidget {
     final showCardNotifire = ref.watch(showCardProvider.notifier);
 
     return asyncChargerSpots.when(
+      skipLoadingOnRefresh: false, // 再検索時にもローディングインジケーターを表示する
+      loading: () => _errorLoading(
+        const CircularProgressIndicator(),
+      ),
+      error: (error, _) {
+        final message = '通信エラーが発生しました。下記エラーを開発者にご連絡ください。\n${error.toString()}';
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('通信エラーが発生しました')),
+          );
+        });
+        return _errorLoading(Card(child: Text(message)));
+      },
       data: (res) => PageView.builder(
         controller: controller,
         itemCount: res.chargerSpots.length,
@@ -36,15 +49,6 @@ class CardList extends ConsumerWidget {
         onPageChanged: (value) async {
           await _onPageChanged(value, res, mapControllerCompleter);
         },
-      ),
-      error: (error, _) {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(content: Text(error.toString())),
-        // );
-        return _errorLoading(const Text('通信エラーです'));
-      },
-      loading: () => _errorLoading(
-        const CircularProgressIndicator(),
       ),
     );
   }
@@ -74,9 +78,12 @@ class CardList extends ConsumerWidget {
   }
 
   Widget _errorLoading(Widget child) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: child,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: child,
+      ),
     );
   }
 }

@@ -99,4 +99,4 @@ open_api
 
 #### その他
 - `assets`: アプリ内で使用する画像などを保管する。使用方法は[画像取り込み](#画像取り込み)を参照ください
-- `.tool-versions`: 本PJではflutterなどのバージョン管理に[asdf](https://asdf-vm.com/)を使用するので、作成しました。
+- `.tool-versions`: 本PJではFlutterなどのバージョン管理に[asdf](https://asdf-vm.com/)を使用するので、作成しました。

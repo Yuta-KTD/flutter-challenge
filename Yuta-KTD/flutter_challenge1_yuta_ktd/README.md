@@ -44,7 +44,7 @@ EVENE_API_KEY=$EV充電エネチェンジAPIのAPIKey
 基本的には[flutter-architecture-blueprintsリポジトリ](https://github.com/wasabeef/flutter-architecture-blueprints#environment)の図のようなMVVM + Repositoryパターンに沿って実装しました。
 [図参照リンク](https://github.com/wasabeef/flutter-architecture-blueprints#environment)
 
-今回、本当は
+他にも[feature-sistな設計](https://codewithandrea.com/articles/flutter-project-structure/?source=post_page-----240d3c56b597--------------------------------)での開発もやってみたかったのですが、スピード優先ということで慣れている形で実装しました
 
 #### lib配下
 今回のプロジェクトで使用したディレクトリ構成です。

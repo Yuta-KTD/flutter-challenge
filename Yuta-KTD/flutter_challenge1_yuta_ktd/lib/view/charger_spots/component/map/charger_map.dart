@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/constant/const_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -26,9 +27,17 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
         ref.watch(mapControllerCompleterProvider);
     final markersAsyncValue = ref.watch(mapMarkerAsyncProvider);
 
-    // TODO: Zoomについては実機検証必要
     final locationAsyncValue = ref.watch(locationProvider);
     return locationAsyncValue.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(locationError)),
+          );
+        });
+        return const Text(locationError);
+      },
       data: (location) {
         return GoogleMap(
           mapType: MapType.normal,
@@ -53,24 +62,20 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
             showSearchButtonNotifire.state = true;
           },
           markers: markersAsyncValue.when(
-            data: (res) {
-              return res;
-            },
+            loading: () => <Marker>{},
             error: (error, _) {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(content: Text(error.toString())),
-              // );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('スポットのマーカ生成中にエラーが発生しました。\n再検索してください。')),
+                );
+              });
               return <Marker>{};
             },
-            loading: () {
-              // TODO: 全面覆うローディングスクリーンだす？
-              return <Marker>{};
-            },
+            data: (res) => res,
           ),
         );
       },
-      loading: () => const CircularProgressIndicator(),
-      error: (error, stack) => Text('An error occurred: $error'),
     );
   }
 

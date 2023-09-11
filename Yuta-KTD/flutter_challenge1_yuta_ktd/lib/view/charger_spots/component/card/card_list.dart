@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
 
+import '../../../../constant/const_text.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
 import 'charger_spots_info_card.dart';
 
@@ -28,10 +29,11 @@ class CardList extends ConsumerWidget {
         const CircularProgressIndicator(),
       ),
       error: (error, _) {
-        final message = '通信エラーが発生しました。下記エラーを開発者にご連絡ください。\n${error.toString()}';
+        final message =
+            '$fetchSpotsError\n下記エラーを開発者にご連絡ください\n${error.toString()}';
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('通信エラーが発生しました')),
+            const SnackBar(content: Text('fetchSpotsError')),
           );
         });
         return _errorLoading(Card(child: Text(message)));

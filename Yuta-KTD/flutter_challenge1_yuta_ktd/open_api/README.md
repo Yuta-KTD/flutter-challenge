@@ -1,14 +1,15 @@
 # 用途
-OpenAPIDocから、openapi-generatorを使用してfreezed生成用のモデルを作成するために作成されたディレクトリです。
+OpenAPIDocから、[openapi-generator](https://openapi-generator.tech/)を使用してfreezed生成用のモデルを作成するために作成されたディレクトリです。
 まだ試作の段階ですが、十分効力はあるので使用しています。
 
 # 使用方法
-1. OpenAPIDocをディレクトリのルートに配置する
-2. `npm run generate`を実行
-3. `dist`ディレクトリにモデルクラスが出力される
-4. `dist`ディレクトリに移動
-5. `dart pub get`を実行
-6. `dart pub run build_runner build`を実行
+前提: Node.jsをインストールしてください([公式](https://nodejs.org/ja/download))
+
+1. OpenAPIDocを本ディレクトリのルートに配置する
+2. `npm run generate`を実行,`dist`ディレクトリにモデルクラスが出力される
+3. `dist`ディレクトリに移動
+4. `dart pub get`を実行
+5. `dart pub run build_runner build --delete-conflicting-outputs`を実行
 
 ## 注意点
 ### 手順1

@@ -51,5 +51,14 @@ class _CurrentLocationButtonState extends ConsumerState<CurrentLocationButton> {
     );
     ref.read(showCardProvider.notifier).state = false;
     ref.read(showSearchButtonProvider.notifier).state = false;
+    final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
+    final LatLng southwest = visibleRegion.southwest;
+    final LatLng northeast = visibleRegion.northeast;
+    await ref.read(chargerSpotsAsyncProvider.notifier).serchChargerSpots(
+          swLat: southwest.latitude.toString(),
+          swLng: southwest.longitude.toString(),
+          neLat: northeast.latitude.toString(),
+          neLng: northeast.longitude.toString(),
+        );
   }
 }

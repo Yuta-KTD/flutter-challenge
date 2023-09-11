@@ -4,7 +4,6 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// API接続管理用
-/// 本来はメソッドの分割とかも行う
 final dioProvider = Provider.autoDispose(
   // TODO: dart-define-fileとかで環境分けする
   (ref) => Dio(

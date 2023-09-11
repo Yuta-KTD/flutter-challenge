@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constant/constant.dart';
+import '../constant/url.dart';
 import '../model/charger_spots_request.dart';
 import 'charger_spots_datasource_interface.dart';
 import 'package:dio/dio.dart';
@@ -14,7 +14,7 @@ class ChargerSpotsDataSource implements ChargerSpotsDataSourceInterface {
   @override
   Future<charger_spot_res.Response> fetchChargerSpots(
       ChargerSpotsRequest param) async {
-    const url = Constant.chargerSpot;
+    const url = URL.chargerSpot;
 
     try {
       final response = await dio.get(url, queryParameters: param.toJson());

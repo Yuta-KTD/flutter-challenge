@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_challenge1_yuta_ktd/constant/constant.dart';
+import 'package:flutter_challenge1_yuta_ktd/constant/url.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +11,7 @@ final dioProvider = Provider.autoDispose(
       headers: {
         'X-EVENE-NATIVE-API-TOKEN': FlutterConfig.get('EVENE_API_KEY'),
       },
-      baseUrl: Constant.baseStgUrl,
+      baseUrl: URL.baseStgUrl,
       contentType: 'application/json',
     ),
   ),

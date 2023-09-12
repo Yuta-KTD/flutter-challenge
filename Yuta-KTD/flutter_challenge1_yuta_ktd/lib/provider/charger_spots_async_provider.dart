@@ -7,6 +7,7 @@ import 'package:openapi/model/response.dart' as charger_spot_res;
 import 'package:openapi/model/status.dart';
 
 import '../model/charger_spots_request.dart';
+import 'page_controller_provider.dart';
 
 class ChargerSpotsAsyncNotifire
     extends AutoDisposeAsyncNotifier<charger_spot_res.Response> {
@@ -40,6 +41,8 @@ class ChargerSpotsAsyncNotifire
     state = await AsyncValue.guard(() async {
       return await repository.fetchChargerSpots(reqestParam);
     });
+    final pageViewController = ref.read(pageControllerProvider);
+    pageViewController.initialPage;
   }
 }
 

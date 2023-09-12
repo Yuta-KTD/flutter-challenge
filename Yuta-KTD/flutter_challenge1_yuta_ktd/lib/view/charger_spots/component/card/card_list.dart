@@ -38,17 +38,17 @@ class CardList extends ConsumerWidget {
               const SnackBar(content: Text('fetchSpotsError')),
             );
           });
-          return _errorLoading(_errorCard(message));
+          return _errorLoading(_messageCard(message));
         },
         data: (res) {
           if (res.status == Status.ngLatlngsIsBlank) {
-            return _errorLoading(_errorCard(ngLatlngsMessage));
+            return _errorLoading(_messageCard(ngLatlngsMessage));
           }
           if (res.status == Status.ngDistanceTooLong) {
-            return _errorLoading(_errorCard(ngDistanceMessage));
+            return _errorLoading(_messageCard(ngDistanceMessage));
           }
           return res.chargerSpots.isEmpty
-              ? _errorLoading(_errorCard('このエリアにはスポットが存在しません'))
+              ? _errorLoading(_messageCard('このエリアにはスポットが存在しません'))
               : PageView.builder(
                   controller: controller,
                   itemCount: res.chargerSpots.length,
@@ -105,7 +105,7 @@ class CardList extends ConsumerWidget {
     );
   }
 
-  Widget _errorCard(String text) {
+  Widget _messageCard(String text) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12.0),

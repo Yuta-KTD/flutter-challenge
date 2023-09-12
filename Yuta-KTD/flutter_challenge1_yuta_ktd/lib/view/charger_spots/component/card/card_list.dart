@@ -55,12 +55,17 @@ class CardList extends ConsumerWidget {
                   itemBuilder: (_, index) {
                     final data = res.chargerSpots[index];
                     return GestureDetector(
-                      onTapDown: (_) => _onCardTapDown(showCardNotifire),
+                      onTapDown: (_) async {
+                        _onCardTapDown(showCardNotifire);
+                        await _moveToCardPosition(
+                            index, res, mapControllerCompleter);
+                      },
                       child: ChargerSpotsInfoCard(chargerSpot: data),
                     );
                   },
                   onPageChanged: (page) async {
-                    await _onPageChanged(page, res, mapControllerCompleter);
+                    await _moveToCardPosition(
+                        page, res, mapControllerCompleter);
                   },
                 );
         });
@@ -72,14 +77,14 @@ class CardList extends ConsumerWidget {
     showCardNotifire.state = true;
   }
 
-  Future<void> _onPageChanged(
-    int page,
+  Future<void> _moveToCardPosition(
+    int cardIndex,
     charger_spot_res.Response res,
     Completer<GoogleMapController> mapControllerCompleter,
   ) async {
     final mapController = await mapControllerCompleter.future;
-    final latitude = res.chargerSpots[page].latitude.toDouble();
-    final longitude = res.chargerSpots[page].longitude.toDouble();
+    final latitude = res.chargerSpots[cardIndex].latitude.toDouble();
+    final longitude = res.chargerSpots[cardIndex].longitude.toDouble();
     await mapController.moveCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(

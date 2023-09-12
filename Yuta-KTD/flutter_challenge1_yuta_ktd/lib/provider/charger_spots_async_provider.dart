@@ -12,7 +12,6 @@ class ChargerSpotsAsyncNotifire
     extends AutoDisposeAsyncNotifier<charger_spot_res.Response> {
   @override
   FutureOr<charger_spot_res.Response> build() {
-    // FIXME: 初期値設定よくわからん
     return const charger_spot_res.Response(status: Status.ok);
   }
 

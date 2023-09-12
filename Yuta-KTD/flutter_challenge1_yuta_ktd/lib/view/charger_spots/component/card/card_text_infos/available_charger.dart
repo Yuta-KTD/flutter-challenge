@@ -20,7 +20,7 @@ class AvailableCharger extends StatelessWidget {
         .length;
     return Row(
       children: [
-        Assets.power.image(width: 16.0, height: 16.0),
+        Assets.image.power.image(width: 16.0, height: 16.0),
         const CardTextInfoTitle(
           title: '利用可能',
         ),

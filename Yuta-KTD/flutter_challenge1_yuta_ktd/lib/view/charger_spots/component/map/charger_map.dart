@@ -28,6 +28,7 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     final markersAsyncValue = ref.watch(mapMarkerAsyncProvider);
     final locationAsyncValue = ref.watch(locationProvider);
     final chargerSpotAsyncValue = ref.watch(chargerSpotsAsyncProvider);
+
     return locationAsyncValue.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) {
@@ -85,18 +86,5 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
   Future<void> _onMapCreated(GoogleMapController mapController,
       Completer<GoogleMapController> mapControllerCompleter) async {
     mapControllerCompleter.complete(mapController);
-    final chargerSpotsNotifire = ref.read(chargerSpotsAsyncProvider.notifier);
-    // FIXME: 遅延を入れないと現在表示領域が地図全体(LatLng(-90.0, -180.0))なってしまう
-    // もっとロバストな方法を考える
-    await Future.delayed(const Duration(seconds: 1));
-    final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
-    final LatLng southwest = visibleRegion.southwest;
-    final LatLng northeast = visibleRegion.northeast;
-    await chargerSpotsNotifire.serchChargerSpots(
-      swLat: southwest.latitude.toString(),
-      swLng: southwest.longitude.toString(),
-      neLat: northeast.latitude.toString(),
-      neLng: northeast.longitude.toString(),
-    );
   }
 }

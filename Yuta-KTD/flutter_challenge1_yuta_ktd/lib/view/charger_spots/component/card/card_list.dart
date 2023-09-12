@@ -24,35 +24,42 @@ class CardList extends ConsumerWidget {
     final showCardNotifire = ref.watch(showCardProvider.notifier);
 
     return asyncChargerSpots.when(
-      skipLoadingOnRefresh: false, // 再検索時にもローディングインジケーターを表示する
-      loading: () => _errorLoading(
-        const CircularProgressIndicator(),
-      ),
-      error: (error, _) {
-        final message =
-            '$fetchSpotsError\n下記エラーを開発者にご連絡ください\n${error.toString()}';
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('fetchSpotsError')),
-          );
+        skipLoadingOnRefresh: false, // 再検索時にもローディングインジケーターを表示する
+        loading: () => _errorLoading(
+              const CircularProgressIndicator(),
+            ),
+        error: (error, _) {
+          final message =
+              '$fetchSpotsError\n下記エラーを開発者にご連絡ください\n${error.toString()}';
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('fetchSpotsError')),
+            );
+          });
+          return _errorLoading(Card(child: Text(message)));
+        },
+        data: (res) {
+          return res.chargerSpots.isEmpty
+              ? const Card(
+                  child: Padding(
+                  padding: EdgeInsets.only(bottom: 120.0),
+                  child: Center(child: Text('このエリアにはスポットが存在しません')),
+                ))
+              : PageView.builder(
+                  controller: controller,
+                  itemCount: res.chargerSpots.length,
+                  itemBuilder: (_, index) {
+                    final data = res.chargerSpots[index];
+                    return GestureDetector(
+                      onTapDown: (_) => _onCardTapDown(showCardNotifire),
+                      child: ChargerSpotsInfoCard(chargerSpot: data),
+                    );
+                  },
+                  onPageChanged: (value) async {
+                    await _onPageChanged(value, res, mapControllerCompleter);
+                  },
+                );
         });
-        return _errorLoading(Card(child: Text(message)));
-      },
-      data: (res) => PageView.builder(
-        controller: controller,
-        itemCount: res.chargerSpots.length,
-        itemBuilder: (_, index) {
-          final data = res.chargerSpots[index];
-          return GestureDetector(
-            onTapDown: (_) => _onCardTapDown(showCardNotifire),
-            child: ChargerSpotsInfoCard(chargerSpot: data),
-          );
-        },
-        onPageChanged: (value) async {
-          await _onPageChanged(value, res, mapControllerCompleter);
-        },
-      ),
-    );
   }
 
   void _onCardTapDown(StateController<bool> showCardNotifire) {

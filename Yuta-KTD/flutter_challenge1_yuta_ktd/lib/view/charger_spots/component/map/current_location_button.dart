@@ -34,7 +34,7 @@ class _CurrentLocationButtonState extends ConsumerState<CurrentLocationButton> {
   Future<void> _moveCamera(WidgetRef ref) async {
     final position = await ref.refresh(locationProvider.future);
     final Completer<GoogleMapController> mapControllerCompleter =
-        ref.watch(mapControllerCompleterProvider);
+        ref.read(mapControllerCompleterProvider);
     final mapController = await mapControllerCompleter.future;
     final latitude = position?.latitude;
     final longitude = position?.longitude;

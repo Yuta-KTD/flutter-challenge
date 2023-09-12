@@ -25,13 +25,11 @@ class CardList extends ConsumerWidget {
         ref.watch(mapControllerCompleterProvider);
     final showCardNotifire = ref.watch(showCardProvider.notifier);
     const ngLatlngsMessage = '現在位置の取得に失敗しました。\n端末・アプリの位置情報の設定を確認してから再検索してください。';
-    const ngDistanceMessage = '検索範囲が広すぎます。範囲を狭めてから再検索してください。';
+    const ngDistanceMessage = '検索範囲が広すぎます。\n範囲を狭めてから再検索してください。';
 
     return asyncChargerSpots.when(
         skipLoadingOnRefresh: false, // 再検索時にもローディングインジケーターを表示する
-        loading: () => _errorLoading(
-              const CircularProgressIndicator(),
-            ),
+        loading: () => _errorLoading(const CircularProgressIndicator()),
         error: (error, _) {
           final message =
               '$fetchSpotsError\n下記エラーを開発者にご連絡ください\n${error.toString()}';
@@ -40,25 +38,17 @@ class CardList extends ConsumerWidget {
               const SnackBar(content: Text('fetchSpotsError')),
             );
           });
-          return _errorLoading(Card(child: Text(message)));
+          return _errorLoading(_errorCard(message));
         },
         data: (res) {
           if (res.status == Status.ngLatlngsIsBlank) {
-            return _errorLoading(
-              const Card(child: BasicText(ngLatlngsMessage)),
-            );
+            return _errorLoading(_errorCard(ngLatlngsMessage));
           }
           if (res.status == Status.ngDistanceTooLong) {
-            return _errorLoading(
-              const Card(child: BasicText(ngDistanceMessage)),
-            );
+            return _errorLoading(_errorCard(ngDistanceMessage));
           }
           return res.chargerSpots.isEmpty
-              ? const Card(
-                  child: Padding(
-                  padding: EdgeInsets.only(bottom: 120.0),
-                  child: Center(child: Text('このエリアにはスポットが存在しません')),
-                ))
+              ? _errorLoading(_errorCard('このエリアにはスポットが存在しません'))
               : PageView.builder(
                   controller: controller,
                   itemCount: res.chargerSpots.length,
@@ -106,6 +96,15 @@ class CardList extends ConsumerWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: child,
+      ),
+    );
+  }
+
+  Widget _errorCard(String text) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: BasicText(text),
       ),
     );
   }

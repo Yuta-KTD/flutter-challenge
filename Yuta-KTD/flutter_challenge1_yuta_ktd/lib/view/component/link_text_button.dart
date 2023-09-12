@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/view/component/basic_text.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/component/style/basic_text_style.dart';
 
 import '../../constant/decolation_style.dart';
 
@@ -31,9 +32,10 @@ class LinkTextButton extends StatelessWidget {
           children: [
             BasicText(
               text,
-              fontSize: 14.0,
-              showUnderLine: true,
-              color: color,
+              style: BasicTextStyle(
+                decoration: TextDecoration.underline,
+                color: color,
+              ),
             ),
             const SizedBox(width: 3.0),
             suffixIcon ?? const SizedBox.shrink(),

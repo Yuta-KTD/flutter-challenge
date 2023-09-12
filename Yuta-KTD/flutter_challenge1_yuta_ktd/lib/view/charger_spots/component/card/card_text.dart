@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/constant/decolation_style.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/component/style/basic_text_style.dart';
 
 import '../../../component/basic_text.dart';
 
@@ -14,7 +15,7 @@ class CardText extends StatelessWidget {
       height: 19.0,
       child: BasicText(
         text,
-        color: color,
+        style: BasicTextStyle(color: color),
       ),
     );
   }

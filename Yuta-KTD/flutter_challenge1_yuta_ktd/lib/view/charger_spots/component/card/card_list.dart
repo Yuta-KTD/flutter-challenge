@@ -59,8 +59,8 @@ class CardList extends ConsumerWidget {
                       child: ChargerSpotsInfoCard(chargerSpot: data),
                     );
                   },
-                  onPageChanged: (value) async {
-                    await _onPageChanged(value, res, mapControllerCompleter);
+                  onPageChanged: (page) async {
+                    await _onPageChanged(page, res, mapControllerCompleter);
                   },
                 );
         });
@@ -73,13 +73,13 @@ class CardList extends ConsumerWidget {
   }
 
   Future<void> _onPageChanged(
-    int value,
+    int page,
     charger_spot_res.Response res,
     Completer<GoogleMapController> mapControllerCompleter,
   ) async {
     final mapController = await mapControllerCompleter.future;
-    final latitude = res.chargerSpots[value].latitude.toDouble();
-    final longitude = res.chargerSpots[value].longitude.toDouble();
+    final latitude = res.chargerSpots[page].latitude.toDouble();
+    final longitude = res.chargerSpots[page].longitude.toDouble();
     await mapController.moveCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(

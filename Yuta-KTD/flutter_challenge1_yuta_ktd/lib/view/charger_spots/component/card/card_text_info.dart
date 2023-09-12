@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/component/basic_text.dart';
 import 'package:openapi/models.dart';
 
 import '../../../../constant/decolation_style.dart';
-import 'card_text.dart';
 import 'card_text_infos/available_charger.dart';
 import 'card_text_infos/business_hours.dart';
 import 'card_text_infos/charger_power.dart';
+import 'card_text_infos/map_launch_button.dart';
 import 'card_text_infos/regular_holiday.dart';
 
 class CardTextInfo extends StatelessWidget {
@@ -46,9 +48,8 @@ class CardTextInfo extends StatelessWidget {
           heightBox12,
           RegularHoliday(chargerSpotServiceTimes),
           heightBox12,
-          // TODO: 地図検索機能
           // url_launcher使って内部アプリ呼び出し
-          const CardText('地図アプリで経路を見る')
+          MapLaunchButton(toLat: latitude, toLng: longitude),
         ],
       ),
     );
@@ -57,14 +58,11 @@ class CardTextInfo extends StatelessWidget {
   Widget _cardTitle(String name) {
     return SizedBox(
       height: 23.0,
-      child: Text(
+      child: BasicText(
         name,
-        style: const TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w700,
-          overflow: TextOverflow.ellipsis,
-          color: textColor,
-        ),
+        fontSize: 18.0,
+        fontWeight: FontWeight.w700,
+        overflow: TextOverflow.ellipsis, // タイトルが長すぎた時は省略する
       ),
     );
   }

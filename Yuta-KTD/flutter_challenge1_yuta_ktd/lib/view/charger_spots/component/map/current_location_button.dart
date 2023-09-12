@@ -30,7 +30,7 @@ class _CurrentLocationButtonState extends ConsumerState<CurrentLocationButton> {
     );
   }
 
-  // 位置データを取得し、カメラを移動させる
+  // 位置データを取得し、カメラを移動させると同時に、検索を行う
   Future<void> _moveCamera(WidgetRef ref) async {
     final position = await ref.refresh(locationProvider.future);
     final Completer<GoogleMapController> mapControllerCompleter =

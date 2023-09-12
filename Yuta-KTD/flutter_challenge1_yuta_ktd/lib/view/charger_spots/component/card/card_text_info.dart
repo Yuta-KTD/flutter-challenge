@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
 import 'package:flutter_challenge1_yuta_ktd/view/component/basic_text.dart';
 import 'package:openapi/models.dart';
 

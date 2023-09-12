@@ -13,7 +13,7 @@ class CustomIconWithNumber {
     final canvas = Canvas(recorder);
     final paint = Paint()..isAntiAlias = true;
 
-    final String imgPath = Assets.pin.path;
+    final String imgPath = Assets.image.pin.path;
     final rawData = await rootBundle.load(imgPath);
     final imgList = Uint8List.view(rawData.buffer);
     final img = await decodeImageFromList(Uint8List.fromList(imgList));

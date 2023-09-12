@@ -26,8 +26,8 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
     final markersAsyncValue = ref.watch(mapMarkerAsyncProvider);
-
     final locationAsyncValue = ref.watch(locationProvider);
+    final chargerSpotAsyncValue = ref.watch(chargerSpotsAsyncProvider);
     return locationAsyncValue.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) {
@@ -64,12 +64,15 @@ class _ChargerMapState extends ConsumerState<ChargerMap> {
           markers: markersAsyncValue.when(
             loading: () => <Marker>{},
             error: (error, _) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('スポットのマーカ生成中にエラーが発生しました。\n再検索してください。')),
-                );
-              });
+              // スポット検索エラーの場合はマーカー表示も必然的にエラーになるので表示しない
+              if (!chargerSpotAsyncValue.hasError) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('スポットのマーカ生成中にエラーが発生しました。\n再検索してください。')),
+                  );
+                });
+              }
               return <Marker>{};
             },
             data: (res) => res,

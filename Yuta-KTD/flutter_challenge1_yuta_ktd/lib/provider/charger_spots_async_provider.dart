@@ -11,6 +11,8 @@ import 'page_controller_provider.dart';
 
 class ChargerSpotsAsyncNotifire
     extends AutoDisposeAsyncNotifier<charger_spot_res.Response> {
+  // TODO: 初期表示が取得件数0件になるので修正必要
+  // 位置情報を取得してからbuildするか、Loadingを返すか
   @override
   FutureOr<charger_spot_res.Response> build() {
     return const charger_spot_res.Response(status: Status.ok);

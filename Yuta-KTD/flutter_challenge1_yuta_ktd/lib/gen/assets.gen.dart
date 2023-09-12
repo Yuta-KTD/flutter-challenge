@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 class Assets {
   Assets._();
 
+  static const AssetGenImage vector = AssetGenImage('assets/Vector.png');
   static const AssetGenImage bolt = AssetGenImage('assets/bolt.png');
   static const AssetGenImage cardWhenNoImages =
       AssetGenImage('assets/cardWhenNoImages.png');
@@ -23,7 +24,7 @@ class Assets {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [bolt, cardWhenNoImages, pin, power, today, watchLator];
+      [vector, bolt, cardWhenNoImages, pin, power, today, watchLator];
 }
 
 class AssetGenImage {

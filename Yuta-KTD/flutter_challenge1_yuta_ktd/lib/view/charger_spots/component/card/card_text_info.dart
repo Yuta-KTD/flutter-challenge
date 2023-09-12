@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge1_yuta_ktd/gen/assets.gen.dart';
 import 'package:flutter_challenge1_yuta_ktd/view/component/basic_text.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/component/style/basic_text_style.dart';
 import 'package:openapi/models.dart';
 
 import '../../../../constant/decolation_style.dart';
@@ -60,9 +60,11 @@ class CardTextInfo extends StatelessWidget {
       height: 23.0,
       child: BasicText(
         name,
-        fontSize: 18.0,
-        fontWeight: FontWeight.w700,
-        overflow: TextOverflow.ellipsis, // タイトルが長すぎた時は省略する
+        style: const BasicTextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+          overflow: TextOverflow.ellipsis, // タイトルが長すぎた時は省略する
+        ),
       ),
     );
   }

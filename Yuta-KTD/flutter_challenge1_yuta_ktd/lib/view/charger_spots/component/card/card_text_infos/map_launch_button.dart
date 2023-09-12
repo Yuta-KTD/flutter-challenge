@@ -16,7 +16,7 @@ class MapLaunchButton extends ConsumerWidget {
     return LinkTextButton(
       '地図アプリで経路を見る',
       onPressed: () => _onPressed(ref),
-      suffixIcon: Assets.vector.image(width: 16.0, height: 16.0),
+      suffixIcon: Assets.image.vector.image(width: 16.0, height: 16.0),
     );
   }
 

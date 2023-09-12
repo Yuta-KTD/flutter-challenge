@@ -42,7 +42,7 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
   /// カード上部の画像
   Widget _images(List<ChargerSpotImage> imagesUrl) {
     if (imagesUrl.isEmpty) {
-      return Assets.cardWhenNoImages.image(fit: BoxFit.cover);
+      return Assets.image.cardWhenNoImages.image(fit: BoxFit.cover);
     }
     return ListView.builder(
       scrollDirection: Axis.horizontal,

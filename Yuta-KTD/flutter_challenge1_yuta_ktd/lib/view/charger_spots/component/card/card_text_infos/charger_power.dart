@@ -24,7 +24,7 @@ class ChargerPower extends StatelessWidget {
       height: 19.0,
       child: Row(
         children: [
-          Assets.bolt.image(width: 16.0, height: 16.0),
+          Assets.image.bolt.image(width: 16.0, height: 16.0),
           const CardTextInfoTitle(
             title: '充電出力',
           ),

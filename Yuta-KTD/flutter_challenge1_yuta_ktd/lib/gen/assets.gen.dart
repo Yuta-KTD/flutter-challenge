@@ -9,22 +9,41 @@
 
 import 'package:flutter/widgets.dart';
 
-class Assets {
-  Assets._();
+class $AssetsImageGen {
+  const $AssetsImageGen();
 
-  static const AssetGenImage vector = AssetGenImage('assets/Vector.png');
-  static const AssetGenImage bolt = AssetGenImage('assets/bolt.png');
-  static const AssetGenImage cardWhenNoImages =
-      AssetGenImage('assets/cardWhenNoImages.png');
-  static const AssetGenImage pin = AssetGenImage('assets/pin.png');
-  static const AssetGenImage power = AssetGenImage('assets/power.png');
-  static const AssetGenImage today = AssetGenImage('assets/today.png');
-  static const AssetGenImage watchLator =
-      AssetGenImage('assets/watchLator.png');
+  /// File path: assets/image/Vector.png
+  AssetGenImage get vector => const AssetGenImage('assets/image/Vector.png');
+
+  /// File path: assets/image/bolt.png
+  AssetGenImage get bolt => const AssetGenImage('assets/image/bolt.png');
+
+  /// File path: assets/image/cardWhenNoImages.png
+  AssetGenImage get cardWhenNoImages =>
+      const AssetGenImage('assets/image/cardWhenNoImages.png');
+
+  /// File path: assets/image/pin.png
+  AssetGenImage get pin => const AssetGenImage('assets/image/pin.png');
+
+  /// File path: assets/image/power.png
+  AssetGenImage get power => const AssetGenImage('assets/image/power.png');
+
+  /// File path: assets/image/today.png
+  AssetGenImage get today => const AssetGenImage('assets/image/today.png');
+
+  /// File path: assets/image/watchLator.png
+  AssetGenImage get watchLator =>
+      const AssetGenImage('assets/image/watchLator.png');
 
   /// List of all assets
   List<AssetGenImage> get values =>
       [vector, bolt, cardWhenNoImages, pin, power, today, watchLator];
+}
+
+class Assets {
+  Assets._();
+
+  static const $AssetsImageGen image = $AssetsImageGen();
 }
 
 class AssetGenImage {

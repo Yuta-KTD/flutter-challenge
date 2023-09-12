@@ -1,21 +1,40 @@
 import 'dart:async';
 
-import 'package:flutter_challenge1_yuta_ktd/repository/charger_spots_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:openapi/model/response.dart' as charger_spot_res;
-import 'package:openapi/model/status.dart';
 
 import '../model/charger_spots_request.dart';
+import '../repository/charger_spots_repository_provider.dart';
+import 'map_controller_completer_provider.dart';
 import 'page_controller_provider.dart';
 
 class ChargerSpotsAsyncNotifire
     extends AutoDisposeAsyncNotifier<charger_spot_res.Response> {
-  // TODO: 初期表示が取得件数0件になるので修正必要
-  // 位置情報を取得してからbuildするか、Loadingを返すか
+  // 初期表示用の取得メソッド
+  // build()内で呼ばれるメソッドは、内部的にAsyncValue .guardで実装されている
+  Future<charger_spot_res.Response> _serchChargerSpots() async {
+    final mapControllerCompleter = ref.watch(mapControllerCompleterProvider);
+    final mapController = await mapControllerCompleter.future;
+    await Future.delayed(const Duration(seconds: 1));
+    final LatLngBounds visibleRegion = await mapController.getVisibleRegion();
+    final LatLng southwest = visibleRegion.southwest;
+    final LatLng northeast = visibleRegion.northeast;
+    final reqestParam = ChargerSpotsRequest(
+      swLat: southwest.latitude.toString(),
+      swLng: southwest.longitude.toString(),
+      neLat: northeast.latitude.toString(),
+      neLng: northeast.longitude.toString(),
+    );
+    final repository = ref.read(chargerSpotsRepositoryProvider);
+
+    return await repository.fetchChargerSpots(reqestParam);
+  }
+
   @override
   FutureOr<charger_spot_res.Response> build() {
-    return const charger_spot_res.Response(status: Status.ok);
+    return _serchChargerSpots();
   }
 
   /// パラメーターからスポット検索を行う

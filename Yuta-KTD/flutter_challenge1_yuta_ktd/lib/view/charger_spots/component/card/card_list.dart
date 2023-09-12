@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/map_controller_completer_provider.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/page_controller_provider.dart';
 import 'package:flutter_challenge1_yuta_ktd/provider/show_card_provider.dart';
+import 'package:flutter_challenge1_yuta_ktd/view/component/basic_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:openapi/model/response.dart' as charger_spot_res;
+import 'package:openapi/model/status.dart';
 
 import '../../../../constant/const_text.dart';
 import '../../../../provider/charger_spots_async_provider.dart';
@@ -22,6 +24,8 @@ class CardList extends ConsumerWidget {
     final Completer<GoogleMapController> mapControllerCompleter =
         ref.watch(mapControllerCompleterProvider);
     final showCardNotifire = ref.watch(showCardProvider.notifier);
+    const ngLatlngsMessage = '現在位置の取得に失敗しました。\n端末・アプリの位置情報の設定を確認してから再検索してください。';
+    const ngDistanceMessage = '検索範囲が広すぎます。範囲を狭めてから再検索してください。';
 
     return asyncChargerSpots.when(
         skipLoadingOnRefresh: false, // 再検索時にもローディングインジケーターを表示する
@@ -39,6 +43,16 @@ class CardList extends ConsumerWidget {
           return _errorLoading(Card(child: Text(message)));
         },
         data: (res) {
+          if (res.status == Status.ngLatlngsIsBlank) {
+            return _errorLoading(
+              const Card(child: BasicText(ngLatlngsMessage)),
+            );
+          }
+          if (res.status == Status.ngDistanceTooLong) {
+            return _errorLoading(
+              const Card(child: BasicText(ngDistanceMessage)),
+            );
+          }
           return res.chargerSpots.isEmpty
               ? const Card(
                   child: Padding(

@@ -23,7 +23,6 @@ class ChargerSpotScreenState extends ConsumerState<ChargerSpotScreen> {
   @override
   Widget build(BuildContext context) {
     final showCard = ref.watch(showCardProvider);
-    // TODO: statusでngの時にダイアログ出す
     return SafeArea(
       child: Scaffold(
         body: Stack(

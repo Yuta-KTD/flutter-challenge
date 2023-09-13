@@ -9,6 +9,7 @@ import '../model/charger_spots_request.dart';
 import '../repository/charger_spots_repository_provider.dart';
 import 'map_controller_completer_provider.dart';
 import 'page_controller_provider.dart';
+import 'show_card_provider.dart';
 
 class ChargerSpotsAsyncNotifire
     extends AutoDisposeAsyncNotifier<charger_spot_res.Response> {
@@ -58,6 +59,9 @@ class ChargerSpotsAsyncNotifire
       uuid: uuid,
       fields: fields,
     );
+    // 検索時はカードはひっこめる
+    final showCardNotifire = ref.watch(showCardProvider.notifier);
+    showCardNotifire.state = false;
     final repository = ref.read(chargerSpotsRepositoryProvider);
     state = await AsyncValue.guard(() async {
       return await repository.fetchChargerSpots(reqestParam);

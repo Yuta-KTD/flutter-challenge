@@ -39,10 +39,19 @@ class ChargerSpotsInfoCard extends ConsumerWidget {
     );
   }
 
-  /// カード上部の画像
+  /// カード上部の画像、枚数によって表示方法を変える
   Widget _images(List<ChargerSpotImage> imagesUrl) {
     if (imagesUrl.isEmpty) {
       return Assets.image.cardWhenNoImages.image(fit: BoxFit.cover);
+    }
+    if (imagesUrl.length == 1) {
+      return SizedBox(
+        width: double.infinity,
+        child: Image.network(
+          imagesUrl[0].url,
+          fit: BoxFit.cover,
+        ),
+      );
     }
     return ListView.builder(
       scrollDirection: Axis.horizontal,

@@ -16,7 +16,6 @@ class CustomIconWithNumber {
     final String imgPath = Assets.image.pin.path;
     final rawData = await rootBundle.load(imgPath);
     final imgList = Uint8List.view(rawData.buffer);
-    canvas.drawColor(Colors.red, BlendMode.src);
     // Canvasに入力する画像の大きさを指定
     final codec = await ui.instantiateImageCodec(Uint8List.fromList(imgList),
         targetWidth: 90, targetHeight: 128);
